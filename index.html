@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dossiê Estratégico - Projeto Vetor Industrial</title>
+    <title>Infográfico Interativo - Projeto Vetor Industrial</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -48,496 +48,299 @@
             0% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.7); }
             100% { box-shadow: 0 0 0 25px rgba(74, 222, 128, 0); }
         }
-
-        ::-webkit-scrollbar { display: none; } /* Hide scrollbar for a cleaner presentation view */
-        
-        .btn-primary { background-color: #22c55e; color: #101410; font-weight: 700; transition: all 0.3s ease; }
-        .btn-primary:hover { background-color: #4ade80; box-shadow: 0 0 20px rgba(74, 222, 128, 0.4); }
         
         .insight-box { background-color: rgba(34, 197, 94, 0.05); border-left: 4px solid #4ade80; }
         .kpi-card { border-left: 4px solid #bef264; background-color: rgba(190, 242, 100, 0.05); }
 
         [x-cloak] { display: none !important; }
 
-        main > section {
-            scroll-snap-align: start;
-            scroll-snap-stop: always;
-        }
-        main {
-            scroll-snap-type: y mandatory;
-            overflow-y: scroll;
-            height: calc(100vh - 76px); /* Adjust based on header height */
-        }
-
     </style>
 </head>
-<body x-data="pageNavigation">
+<body x-data>
 
     <!-- Header -->
     <header class="sticky top-0 z-50 section-card shadow-lg">
-        <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+        <div class="container mx-auto px-4 md:px-6 py-3 flex justify-between items-center">
             <div>
                 <div class="flex items-center space-x-3">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-400"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
-                    <h1 class="text-xl font-bold text-white tracking-wider">PROJETO VETOR INDUSTRIAL</h1>
+                    <h1 class="text-lg md:text-xl font-bold text-white tracking-wider">PROJETO VETOR INDUSTRIAL</h1>
                 </div>
-                <p class="text-sm font-medium text-gray-400 ml-9 -mt-1">Dossiê Estratégico Interativo</p>
             </div>
             <div>
-                <img src="https://i.postimg.cc/ht2WzKy8/senai-MD.png" alt="Logotipo da Parceria SENAI e Ministério da Defesa" class="h-12">
+                <img src="https://i.postimg.cc/ht2WzKy8/senai-MD.png" alt="Logotipo da Parceria SENAI e Ministério da Defesa" class="h-10 md:h-12">
             </div>
         </div>
     </header>
 
-    <main id="main-content">
+    <main class="container mx-auto p-4 md:p-8">
 
         <!-- Section 1: Introduction -->
-        <section id="page-0" class="min-h-full flex items-center justify-center text-center">
-            <div class="container mx-auto px-4">
-                <h2 class="text-5xl md:text-7xl font-extrabold tracking-tight text-white">
+        <section id="intro" class="min-h-[60vh] md:min-h-[80vh] flex items-center justify-center text-center py-16">
+            <div class="max-w-4xl mx-auto space-y-6">
+                 <h2 class="text-4xl sm:text-5xl md:text-7xl font-extrabold tracking-tight text-white">
                     Qualificando Heróis para a <span class="gradient-text">Indústria 4.0</span>
                 </h2>
-                <p class="mt-6 text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">
-                    Este dossiê apresenta o 'Vetor Industrial', um programa nacional que transforma o serviço militar em uma carreira de sucesso na indústria brasileira.
+                <p class="text-base sm:text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">
+                    Este infográfico apresenta o 'Vetor Industrial', um programa nacional que transforma o serviço militar em uma carreira de sucesso na indústria brasileira.
                 </p>
             </div>
         </section>
 
         <!-- Section 2: The Challenge -->
-        <section id="page-1" class="min-h-full flex flex-col justify-center py-20" x-data="{ showAnalysis: false }">
-            <div class="container mx-auto px-4">
-                <div class="text-center mb-16">
-                    <h3 class="text-4xl font-bold tracking-tight text-white">O Cenário: Demanda Industrial e a Janela de Oportunidade</h3>
-                    <p class="mt-4 text-lg text-lime-300 font-medium max-w-3xl mx-auto">Analisamos a demanda massiva por 2,2 milhões de novos profissionais como a oportunidade estratégica para inserir um capital humano de elite.</p>
-                </div>
-                
-                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center max-w-6xl mx-auto">
-                     <div class="section-card rounded-2xl p-8">
-                        <p class="text-5xl font-extrabold gradient-text">14 Milhões</p>
-                        <p class="mt-2 text-lg text-gray-300">De pessoas precisarão de formação ligada à indústria no Brasil.</p>
-                     </div>
-                     <div class="section-card rounded-2xl p-8 border-2 border-green-400 shadow-lg shadow-green-500/10">
-                        <p class="text-5xl font-extrabold gradient-text">2,2 Milhões</p>
-                        <p class="mt-2 text-lg text-gray-300">É a demanda por <span class="text-white font-semibold">formação inicial</span> para novas vagas. <br><strong class="text-green-400">(NOSSO FOCO ESTRATÉGICO)</strong></p>
-                     </div>
-                     <div class="section-card rounded-2xl p-8">
-                        <p class="text-5xl font-extrabold gradient-text">11,8 Milhões</p>
-                        <p class="mt-2 text-lg text-gray-300">De profissionais já empregados precisarão de <span class="text-white font-semibold">aperfeiçoamento</span>.</p>
-                     </div>
-                </div>
-                 <p class="text-xs text-gray-500 mt-6 text-center">Fonte: Observatório Nacional da Indústria, Mapa do Trabalho Industrial (Projeção 2025–2027).</p>
-                <div class="text-center mt-8">
-                    <button @click="showAnalysis = !showAnalysis" class="text-green-400 font-semibold flex items-center mx-auto gap-2">
-                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20V16"/></svg>
-                        <span x-text="showAnalysis ? 'Ocultar Contexto Estratégico' : 'Ver Contexto Estratégico'"></span>
-                    </button>
-                     <div x-show="showAnalysis" x-transition x-cloak class="mt-4 max-w-3xl mx-auto">
-                            <div class="insight-box p-4 rounded-lg text-left">
-                                <h4 class="font-bold text-lg text-white">Alinhamento Nacional: A Política Nova Indústria Brasil (NIB)</h4>
-                                <p class="text-gray-300 mt-2">Este projeto nasce em um momento perfeito. A NIB (2024–2033) e seu Plano de Ação (2024–2026) fornecem o "guarda-chuva" estratégico e financeiro ideal. Ao qualificar mão de obra para setores prioritários, o S2I se torna uma "infraestrutura de talentos" essencial para as missões da NIB, facilitando a captação de recursos e parcerias federativas.</p>
-                                 <p class="text-xs text-gray-500 mt-3">Fonte: Agência Brasil, Agência Gov (Período: 2024).</p>
-                            </div>
-                        </div>
-                </div>
+        <section id="challenge" class="py-20" x-data="{ showAnalysis: false }">
+            <div class="text-center mb-12 md:mb-16">
+                <h3 class="text-3xl md:text-4xl font-bold tracking-tight text-white">O Cenário: Demanda Industrial e a Janela de Oportunidade</h3>
+                <p class="mt-4 text-base md:text-lg text-lime-300 font-medium max-w-3xl mx-auto">Analisamos a demanda massiva por 2,2 milhões de novos profissionais como a oportunidade estratégica para inserir um capital humano de elite.</p>
             </div>
+            
+             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 text-center max-w-6xl mx-auto">
+                 <div class="section-card rounded-2xl p-6 md:p-8">
+                    <p class="text-4xl md:text-5xl font-extrabold gradient-text">14 Milhões</p>
+                    <p class="mt-2 text-base md:text-lg text-gray-300">De pessoas precisarão de formação ligada à indústria no Brasil.</p>
+                 </div>
+                 <div class="section-card rounded-2xl p-6 md:p-8 border-2 border-green-400 shadow-lg shadow-green-500/10">
+                    <p class="text-4xl md:text-5xl font-extrabold gradient-text">2,2 Milhões</p>
+                    <p class="mt-2 text-base md:text-lg text-gray-300">É a demanda por <span class="text-white font-semibold">formação inicial</span> para novas vagas. <br><strong class="text-green-400">(NOSSO FOCO)</strong></p>
+                 </div>
+                 <div class="section-card rounded-2xl p-6 md:p-8">
+                    <p class="text-4xl md:text-5xl font-extrabold gradient-text">11,8 Milhões</p>
+                    <p class="mt-2 text-base md:text-lg text-gray-300">De profissionais já empregados precisarão de <span class="text-white font-semibold">aperfeiçoamento</span>.</p>
+                 </div>
+            </div>
+             <p class="text-xs text-gray-500 mt-6 text-center">Fonte: Observatório Nacional da Indústria, Mapa do Trabalho Industrial (Projeção 2025–2027).</p>
         </section>
 
         <!-- Section 3: The Asset & Precedent -->
-        <section id="page-2" class="min-h-full flex flex-col justify-center py-20">
-            <div class="container mx-auto px-4">
-                <div class="text-center mb-16">
-                    <h3 class="text-4xl font-bold tracking-tight text-white">O Ativo Estratégico e o Alicerce Existente</h3>
-                    <p class="mt-4 text-lg text-lime-300 font-medium max-w-3xl mx-auto">Conectamos um ativo humano com disciplina e resiliência a um modelo de qualificação já validado pelo sucesso do Projeto Soldado Cidadão.</p>
-                </div>
-                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start max-w-6xl mx-auto">
-                    <div>
-                         <h4 class="text-2xl font-bold text-white mb-4">Capital Humano de Elite</h4>
-                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div class="section-card rounded-lg p-4"><strong class="text-green-400">Disciplina e Resiliência:</strong> Redução do turnover e aumento da eficiência.</div>
-                            <div class="section-card rounded-lg p-4"><strong class="text-green-400">Liderança e Equipe:</strong> Potenciais líderes de chão de fábrica.</div>
-                            <div class="section-card rounded-lg p-4"><strong class="text-green-400">Raciocínio Lógico:</strong> Otimização de processos e manutenção preditiva.</div>
-                            <div class="section-card rounded-lg p-4"><strong class="text-green-400">Aptidão Tecnológica:</strong> Rápida adaptação à Indústria 4.0.</div>
-                        </div>
+        <section id="asset" class="py-20">
+            <div class="text-center mb-12 md:mb-16">
+                <h3 class="text-3xl md:text-4xl font-bold tracking-tight text-white">O Ativo Estratégico e o Alicerce Existente</h3>
+                <p class="mt-4 text-base md:text-lg text-lime-300 font-medium max-w-3xl mx-auto">Conectamos um ativo humano com disciplina e resiliência a um modelo de qualificação já validado pelo sucesso do Projeto Soldado Cidadão.</p>
+            </div>
+             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start max-w-6xl mx-auto">
+                <div>
+                     <h4 class="text-2xl font-bold text-white mb-4">Capital Humano de Elite</h4>
+                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="section-card rounded-lg p-4"><strong class="text-green-400">Disciplina e Resiliência:</strong> Redução do turnover e aumento da eficiência.</div>
+                        <div class="section-card rounded-lg p-4"><strong class="text-green-400">Liderança e Equipe:</strong> Potenciais líderes de chão de fábrica.</div>
+                        <div class="section-card rounded-lg p-4"><strong class="text-green-400">Raciocínio Lógico:</strong> Otimização de processos e manutenção preditiva.</div>
+                        <div class="section-card rounded-lg p-4"><strong class="text-green-400">Aptidão Tecnológica:</strong> Rápida adaptação à Indústria 4.0.</div>
                     </div>
-                    <div class="mt-8 lg:mt-0">
-                        <div class="insight-box p-6 rounded-lg">
-                            <h4 class="font-bold text-2xl text-white">Fundação Comprovada: Projeto Soldado Cidadão</h4>
-                            <p class="text-gray-300 mt-2">Há 20 anos, o Ministério da Defesa opera o bem-sucedido Projeto Soldado Cidadão, que já qualificou mais de 300 mil militares. O Vetor Industrial não é uma nova iniciativa, mas uma <strong class="text-white">evolução estratégica</strong>: escalar e direcionar este modelo para a demanda industrial atual, aproveitando os Acordos de Cooperação Técnica (ACTs) já existentes entre MD, CNI e SENAI.</p>
-                            <p class="text-xs text-gray-500 mt-3">Fonte: Portal de Serviços e Informações do Brasil (Dados de capacitação ref. 2024; Orçamento ref. 2025).</p>
-                        </div>
+                </div>
+                <div class="mt-8 lg:mt-0">
+                    <div class="insight-box p-6 rounded-lg">
+                        <h4 class="font-bold text-2xl text-white">Fundação Comprovada: Projeto Soldado Cidadão</h4>
+                        <p class="text-gray-300 mt-2">Há 20 anos, o Ministério da Defesa opera o bem-sucedido Projeto Soldado Cidadão. O Vetor Industrial é a sua <strong class="text-white">evolução estratégica</strong>: escalar e direcionar este modelo para a demanda industrial atual, aproveitando os Acordos de Cooperação Técnica (ACTs) já existentes.</p>
+                        <p class="text-xs text-gray-500 mt-3">Fonte: Portal de Serviços e Informações do Brasil (Dados de 2024).</p>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Section 4: Opportunities & Gains -->
-        <section id="page-3" class="min-h-full flex flex-col justify-center py-20" x-data="{ openTab: 'militares' }">
-            <div class="container mx-auto px-4">
-                <div class="text-center mb-16">
-                     <h3 class="text-4xl font-bold tracking-tight text-white">Quadro Estratégico: Oportunidades e Ganhos</h3>
-                     <p class="mt-4 text-lg text-lime-300 font-medium max-w-3xl mx-auto">Demonstramos o ciclo virtuoso do projeto, detalhando os ganhos estratégicos para as Forças Armadas, a Indústria e a Nação.</p>
+        <section id="opportunities" class="py-20" x-data="{ openTab: 'militares' }">
+            <div class="text-center mb-12 md:mb-16">
+                 <h3 class="text-3xl md:text-4xl font-bold tracking-tight text-white">Quadro Estratégico: Oportunidades e Ganhos</h3>
+                 <p class="mt-4 text-base md:text-lg text-lime-300 font-medium max-w-3xl mx-auto">Demonstramos o ciclo virtuoso do projeto, detalhando os ganhos estratégicos para as Forças Armadas, a Indústria e a Nação.</p>
+            </div>
+            <div class="section-card p-4 sm:p-8 rounded-2xl max-w-5xl mx-auto">
+                <div class="flex flex-col sm:flex-row justify-center border-b border-gray-700 mb-6">
+                    <button @click="openTab = 'militares'" :class="{'border-green-400 text-white': openTab === 'militares', 'border-transparent text-gray-400 hover:text-white': openTab !== 'militares'}" class="py-3 px-4 sm:px-6 border-b-2 font-semibold transition text-sm sm:text-base">Forças Armadas</button>
+                    <button @click="openTab = 'industria'" :class="{'border-green-400 text-white': openTab === 'industria', 'border-transparent text-gray-400 hover:text-white': openTab !== 'industria'}" class="py-3 px-4 sm:px-6 border-b-2 font-semibold transition text-sm sm:text-base">Indústria Nacional</button>
+                    <button @click="openTab = 'governo'" :class="{'border-green-400 text-white': openTab === 'governo', 'border-transparent text-gray-400 hover:text-white': openTab !== 'governo'}" class="py-3 px-4 sm:px-6 border-b-2 font-semibold transition text-sm sm:text-base">Governo e Sociedade</button>
                 </div>
-                <div class="section-card p-8 rounded-2xl max-w-5xl mx-auto">
-                    <div class="flex justify-center border-b border-gray-700 mb-6">
-                        <button @click="openTab = 'militares'" :class="{'border-green-400 text-white': openTab === 'militares', 'border-transparent text-gray-400 hover:text-white': openTab !== 'militares'}" class="py-3 px-6 border-b-2 font-semibold transition">Forças Armadas</button>
-                        <button @click="openTab = 'industria'" :class="{'border-green-400 text-white': openTab === 'industria', 'border-transparent text-gray-400 hover:text-white': openTab !== 'industria'}" class="py-3 px-6 border-b-2 font-semibold transition">Indústria Nacional</button>
-                        <button @click="openTab = 'governo'" :class="{'border-green-400 text-white': openTab === 'governo', 'border-transparent text-gray-400 hover:text-white': openTab !== 'governo'}" class="py-3 px-6 border-b-2 font-semibold transition">Governo e Sociedade</button>
-                    </div>
-                    <div x-show="openTab === 'militares'" x-transition:enter.duration.300ms>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div class="insight-box p-4 rounded-lg"><h5 class="font-bold text-white">Legado de Empregabilidade</h5><p class="text-gray-300 text-sm">Oferece uma transição de carreira digna e estruturada, garantindo um futuro profissional para quem serviu à nação.</p></div>
-                            <div class="insight-box p-4 rounded-lg"><h5 class="font-bold text-white">Valorização do Serviço Militar</h5><p class="text-gray-300 text-sm">Torna o serviço militar temporário ainda mais atrativo para os jovens, oferecendo uma dupla certificação: a militar e a industrial.</p></div>
-                            <div class="insight-box p-4 rounded-lg"><h5 class="font-bold text-white">Retenção de Talentos</h5><p class="text-gray-300 text-sm">Otimiza o aproveitamento do capital humano, transformando o período de serviço em um investimento de longo prazo.</p></div>
-                            <div class="insight-box p-4 rounded-lg"><h5 class="font-bold text-white">Fortalecimento da Imagem</h5><p class="text-gray-300 text-sm">Reforça o papel das Forças Armadas como instituição formadora de cidadãos e pilar do desenvolvimento nacional.</p></div>
-                        </div>
-                    </div>
-                    <div x-show="openTab === 'industria'" x-cloak x-transition:enter.duration.300ms>
-                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div class="insight-box p-4 rounded-lg"><h5 class="font-bold text-white">Pipeline de Talentos Premium</h5><p class="text-gray-300 text-sm">Acesso a um fluxo constante de profissionais com disciplina, resiliência e ética de trabalho acima da média.</p></div>
-                            <div class="insight-box p-4 rounded-lg"><h5 class="font-bold text-white">Redução de Custos</h5><p class="text-gray-300 text-sm">Diminui drasticamente os custos e o tempo de recrutamento e seleção para vagas técnicas.</p></div>
-                            <div class="insight-box p-4 rounded-lg"><h5 class="font-bold text-white">Qualificação Sob Medida</h5><p class="text-gray-300 text-sm">Mão de obra formada pelo SENAI em cursos alinhados com as demandas reais e imediatas do setor produtivo.</p></div>
-                            <div class="insight-box p-4 rounded-lg"><h5 class="font-bold text-white">Aumento de Produtividade</h5><p class="text-gray-300 text-sm">Profissionais com maior adaptabilidade e capacidade de resolução de problemas, resultando em maior eficiência e menor turnover.</p></div>
-                        </div>
-                    </div>
-                    <div x-show="openTab === 'governo'" x-cloak x-transition:enter.duration.300ms>
-                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div class="insight-box p-4 rounded-lg"><h5 class="font-bold text-white">Soberania Industrial</h5><p class="text-gray-300 text-sm">Fortalece a base industrial do país, um pilar essencial da defesa e autonomia estratégica, alinhado à Nova Indústria Brasil (NIB).</p></div>
-                            <div class="insight-box p-4 rounded-lg"><h5 class="font-bold text-white">Impacto Econômico Direto</h5><p class="text-gray-300 text-sm">Injeta centenas de milhões de reais anualmente em massa salarial na economia, aquecendo o consumo e a arrecadação.</p></div>
-                            <div class="insight-box p-4 rounded-lg"><h5 class="font-bold text-white">Redução de Custos Sociais</h5><p class="text-gray-300 text-sm">Diminui a pressão sobre programas de seguro-desemprego e assistência social, ao gerar emprego formal e qualificado.</p></div>
-                            <div class="insight-box p-4 rounded-lg"><h5 class="font-bold text-white">Desenvolvimento Regional</h5><p class="text-gray-300 text-sm">Permite direcionar a formação para polos industriais específicos em diferentes estados, combatendo desigualdades regionais.</p></div>
-                        </div>
-                    </div>
-                </div>
+                <div x-show="openTab === 'militares'"><div class="grid grid-cols-1 md:grid-cols-2 gap-6"><div class="insight-box p-4 rounded-lg"><h5 class="font-bold text-white">Legado de Empregabilidade</h5><p class="text-gray-300 text-sm">Oferece uma transição de carreira digna e estruturada para quem serviu à nação.</p></div><div class="insight-box p-4 rounded-lg"><h5 class="font-bold text-white">Valorização do Serviço Militar</h5><p class="text-gray-300 text-sm">Torna o serviço militar temporário mais atrativo, oferecendo uma dupla certificação.</p></div></div></div>
+                <div x-show="openTab === 'industria'" x-cloak><div class="grid grid-cols-1 md:grid-cols-2 gap-6"><div class="insight-box p-4 rounded-lg"><h5 class="font-bold text-white">Pipeline de Talentos Premium</h5><p class="text-gray-300 text-sm">Acesso a profissionais com disciplina, resiliência e ética de trabalho acima da média.</p></div><div class="insight-box p-4 rounded-lg"><h5 class="font-bold text-white">Redução de Custos</h5><p class="text-gray-300 text-sm">Diminui drasticamente os custos e o tempo de recrutamento e seleção para vagas técnicas.</p></div></div></div>
+                <div x-show="openTab === 'governo'" x-cloak><div class="grid grid-cols-1 md:grid-cols-2 gap-6"><div class="insight-box p-4 rounded-lg"><h5 class="font-bold text-white">Soberania Industrial</h5><p class="text-gray-300 text-sm">Fortalece a base industrial do país, alinhado à Nova Indústria Brasil (NIB).</p></div><div class="insight-box p-4 rounded-lg"><h5 class="font-bold text-white">Impacto Econômico</h5><p class="text-gray-300 text-sm">Injeta centenas de milhões em massa salarial na economia anualmente.</p></div></div></div>
             </div>
         </section>
 
 
         <!-- Section 5: Map of Opportunities -->
-        <section id="page-4" class="min-h-full flex flex-col justify-center py-20">
-             <div class="container mx-auto px-4">
-                <div class="text-center mb-16">
-                    <h3 class="text-4xl font-bold tracking-tight text-white">Mapa Tático de Oportunidades</h3>
-                    <p class="mt-4 text-lg text-lime-300 font-medium max-w-3xl mx-auto">Explore o mapa tático para cruzar a demanda industrial com a disponibilidade de mão de obra e direcione os recursos com precisão cirúrgica.</p>
+        <section id="map" class="py-20">
+             <div class="text-center mb-12 md:mb-16">
+                <h3 class="text-3xl md:text-4xl font-bold tracking-tight text-white">Mapa Tático de Oportunidades</h3>
+                <p class="mt-4 text-base md:text-lg text-lime-300 font-medium max-w-3xl mx-auto">Explore o mapa tático para cruzar a demanda industrial com a disponibilidade de mão de obra e direcione os recursos com precisão cirúrgica.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-2 section-card rounded-2xl p-4 md:p-6">
+                    <div class="map-container">
+                        <img src="https://i.postimg.cc/vmKVyPjr/doodle-freehand-drawing-of-brazil-map-free-png-1.webp" alt="Mapa do Brasil" class="map-image">
+                        <!-- Hotspots -->
+                        <div id="RR" class="state-hotspot" style="top: 13%; left: 32%; width: 10%; height: 12%;"></div><div id="AP" class="state-hotspot" style="top: 15%; left: 53%; width: 10%; height: 10%;"></div><div id="AM" class="state-hotspot" style="top: 31%; left: 27%; width: 20%; height: 18%;"></div><div id="PA" class="state-hotspot" style="top: 33%; left: 50%; width: 18%; height: 20%;"></div><div id="MA" class="state-hotspot" style="top: 41%; left: 66%; width: 10%; height: 12%;"></div><div id="PI" class="state-hotspot" style="top: 46%; left: 69%; width: 8%; height: 12%;"></div><div id="CE" class="state-hotspot" style="top: 39%; left: 74%; width: 8%; height: 8%;"></div><div id="RN" class="state-hotspot" style="top: 41%; left: 80%; width: 6%; height: 6%;"></div><div id="PB" class="state-hotspot" style="top: 45%; left: 81%; width: 6%; height: 6%;"></div><div id="PE" class="state-hotspot" style="top: 49%; left: 79%; width: 8%; height: 8%;"></div><div id="AL" class="state-hotspot" style="top: 53%; left: 81%; width: 6%; height: 6%;"></div><div id="SE" class="state-hotspot" style="top: 56%; left: 79%; width: 6%; height: 6%;"></div><div id="BA" class="state-hotspot" style="top: 58%; left: 69%; width: 15%; height: 18%;"></div><div id="AC" class="state-hotspot" style="top: 54%; left: 19%; width: 8%; height: 10%;"></div><div id="RO" class="state-hotspot" style="top: 57%; left: 29%; width: 10%; height: 12%;"></div><div id="MT" class="state-hotspot" style="top: 60%; left: 45%; width: 18%; height: 16%;"></div><div id="TO" class="state-hotspot" style="top: 51%; left: 59%; width: 10%; height: 16%;"></div><div id="GO" class="state-hotspot" style="top: 67%; left: 57%; width: 12%; height: 12%;"></div><div id="DF" class="state-hotspot" style="top: 66%; left: 61%; width: 5%; height: 5%;"></div><div id="MS" class="state-hotspot" style="top: 79%; left: 48%; width: 12%; height: 12%;"></div><div id="MG" class="state-hotspot" style="top: 74%; left: 65%; width: 15%; height: 15%;"></div><div id="ES" class="state-hotspot" style="top: 77%; left: 74%; width: 6%; height: 8%;"></div><div id="RJ" class="state-hotspot" style="top: 83%; left: 70%; width: 8%; height: 6%;"></div><div id="SP" class="state-hotspot" style="top: 81%; left: 58%; width: 12%; height: 10%;"></div><div id="PR" class="state-hotspot" style="top: 89%; left: 54%; width: 12%; height: 8%;"></div><div id="SC" class="state-hotspot" style="top: 93%; left: 56%; width: 8%; height: 8%;"></div><div id="RS" class="state-hotspot" style="top: 94%; left: 50%; width: 15%; height: 15%;"></div>
+                    </div>
                 </div>
                 
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    <div class="lg:col-span-2 section-card rounded-2xl p-6">
-                        <div class="map-container">
-                            <img src="https://i.postimg.cc/B6zNdnZ9/doodle-freehand-drawing-of-brazil-map-free-png.webp" alt="Mapa do Brasil" class="map-image">
-                            <!-- Hotspots adjusted for the new map -->
-                            <div id="RR" class="state-hotspot" style="top: 15%; left: 29%; width: 10%; height: 12%;"></div>
-                            <div id="AP" class="state-hotspot" style="top: 16%; left: 52%; width: 10%; height: 10%;"></div>
-                            <div id="AM" class="state-hotspot" style="top: 32%; left: 28%; width: 20%; height: 18%;"></div>
-                            <div id="PA" class="state-hotspot" style="top: 35%; left: 52%; width: 18%; height: 20%;"></div>
-                            <div id="MA" class="state-hotspot" style="top: 43%; left: 65%; width: 10%; height: 12%;"></div>
-                            <div id="PI" class="state-hotspot" style="top: 48%; left: 69%; width: 8%; height: 12%;"></div>
-                            <div id="CE" class="state-hotspot" style="top: 40%; left: 74%; width: 8%; height: 8%;"></div>
-                            <div id="RN" class="state-hotspot" style="top: 42%; left: 81%; width: 6%; height: 6%;"></div>
-                            <div id="PB" class="state-hotspot" style="top: 46%; left: 82%; width: 6%; height: 6%;"></div>
-                            <div id="PE" class="state-hotspot" style="top: 50%; left: 80%; width: 8%; height: 8%;"></div>
-                            <div id="AL" class="state-hotspot" style="top: 54%; left: 82%; width: 6%; height: 6%;"></div>
-                            <div id="SE" class="state-hotspot" style="top: 58%; left: 80%; width: 6%; height: 6%;"></div>
-                            <div id="BA" class="state-hotspot" style="top: 60%; left: 70%; width: 15%; height: 18%;"></div>
-                            <div id="AC" class="state-hotspot" style="top: 55%; left: 18%; width: 8%; height: 10%;"></div>
-                            <div id="RO" class="state-hotspot" style="top: 58%; left: 28%; width: 10%; height: 12%;"></div>
-                            <div id="MT" class="state-hotspot" style="top: 62%; left: 45%; width: 18%; height: 16%;"></div>
-                            <div id="TO" class="state-hotspot" style="top: 52%; left: 58%; width: 10%; height: 16%;"></div>
-                            <div id="GO" class="state-hotspot" style="top: 68%; left: 56%; width: 12%; height: 12%;"></div>
-                            <div id="DF" class="state-hotspot" style="top: 67%; left: 60%; width: 5%; height: 5%;"></div>
-                            <div id="MS" class="state-hotspot" style="top: 80%; left: 48%; width: 12%; height: 12%;"></div>
-                            <div id="MG" class="state-hotspot" style="top: 75%; left: 65%; width: 15%; height: 15%;"></div>
-                            <div id="ES" class="state-hotspot" style="top: 78%; left: 74%; width: 6%; height: 8%;"></div>
-                            <div id="RJ" class="state-hotspot" style="top: 84%; left: 71%; width: 8%; height: 6%;"></div>
-                            <div id="SP" class="state-hotspot" style="top: 82%; left: 58%; width: 12%; height: 10%;"></div>
-                            <div id="PR" class="state-hotspot" style="top: 90%; left: 53%; width: 12%; height: 8%;"></div>
-                            <div id="SC" class="state-hotspot" style="top: 94%; left: 56%; width: 8%; height: 8%;"></div>
-                            <div id="RS" class="state-hotspot" style="top: 95%; left: 50%; width: 15%; height: 15%;"></div>
-                        </div>
-                    </div>
-                    
-                    <div id="map-info-panel" class="section-card rounded-2xl p-6 flex flex-col justify-center">
-                         <div id="info-content" class="space-y-3">
-                            <h4 class="text-2xl font-bold text-white text-center" id="info-title">Selecione um Estado</h4>
-                            <div id="info-details" class="hidden">
-                                <div>
-                                    <p class="text-sm font-medium text-gray-400">Demanda Total a Qualificar (até 2027)</p>
-                                    <p class="text-3xl font-extrabold gradient-text" id="info-demand">-</p>
-                                </div>
-                                <div class="mt-3">
-                                    <p class="text-sm font-medium text-gray-400">Taxa de Desocupação (1T/2025)</p>
-                                    <p id="info-unemployment" class="text-xl font-bold">-</p>
-                                    <p class="text-xs text-gray-400">Sugere maior ou menor disponibilidade de mão de obra local.</p>
-                                </div>
-                                <div class="mt-3">
-                                    <p class="text-sm font-medium text-gray-400">Principais Áreas-Alvo (Demanda)</p>
-                                    <ul id="info-sectors" class="list-none mt-1 space-y-1 text-gray-200"></ul>
-                                </div>
+                <div id="map-info-panel" class="section-card rounded-2xl p-6 mt-8 lg:mt-0 flex flex-col justify-center">
+                     <div id="info-content" class="space-y-3">
+                        <h4 class="text-2xl font-bold text-white text-center" id="info-title">Selecione um Estado</h4>
+                        <div id="info-details" class="hidden">
+                            <div>
+                                <p class="text-sm font-medium text-gray-400">Demanda Total a Qualificar (até 2027)</p>
+                                <p class="text-3xl font-extrabold gradient-text" id="info-demand">-</p>
                             </div>
-                             <p class="text-xs text-gray-500 mt-4 text-center">Fontes: Mapa do Trabalho Industrial (2025–27); PNAD Contínua, IBGE (1T/2025).</p>
+                            <div class="mt-3">
+                                <p class="text-sm font-medium text-gray-400">Taxa de Desocupação (1T/2025)</p>
+                                <p id="info-unemployment" class="text-xl font-bold">-</p>
+                            </div>
+                            <div class="mt-3">
+                                <p class="text-sm font-medium text-gray-400">Principais Áreas-Alvo (Demanda)</p>
+                                <ul id="info-sectors" class="list-none mt-1 space-y-1 text-gray-200"></ul>
+                            </div>
                         </div>
+                         <p class="text-xs text-gray-500 mt-4 text-center">Fontes: Mapa do Trabalho Industrial (2025–27); PNAD Contínua, IBGE (1T/2025).</p>
                     </div>
                 </div>
             </div>
         </section>
-
-        <!-- New Strategic Analysis Section -->
-        <section id="page-5" class="min-h-full flex flex-col justify-center py-20" x-data="{ openTab: 1 }">
-            <div class="container mx-auto px-4">
-                <div class="text-center mb-16">
-                    <h3 class="text-4xl font-bold tracking-tight text-white">Análise Estratégica: Cruzando Oferta e Demanda</h3>
-                    <p class="mt-4 text-lg text-lime-300 font-medium max-w-3xl mx-auto">Dimensionamos o impacto do programa cruzando a oferta de militares com a demanda industrial, projetando cenários realistas de execução.</p>
-                </div>
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
-                    <div class="insight-box p-6 rounded-lg">
-                        <h4 class="font-bold text-2xl text-white">Oferta: O Pipeline de Capital Humano</h4>
-                        <p class="text-gray-300 mt-2">O efetivo de militares temporários é definido por Comandos Militares de Área (CMA), não por estado. Para dimensionar a oferta por UF, utilizamos a melhor proxy pública: os dados de alistamento militar, cruzados com a estrutura dos CMAs. Isso nos permite estimar a escala do programa em cada localidade.</p>
-                        <ul class="mt-4 space-y-2 text-gray-300">
-                            <li><strong class="text-white">~85 mil</strong> jovens selecionados anualmente para as Forças Armadas.</li>
-                            <li><strong class="text-white">~50 mil</strong> incorporados anualmente apenas no Exército.</li>
-                        </ul>
-                        <p class="text-xs text-gray-500 mt-3">Fontes: Decreto 12.364/2025, Portaria DGP nº 524/2025, Dados Abertos (2023), Defesa em Foco (2023).</p>
-                    </div>
-                     <div class="insight-box p-6 rounded-lg">
-                        <h4 class="font-bold text-2xl text-white">Demanda: A Necessidade da Indústria</h4>
-                        <p class="text-gray-300 mt-2">Os dados do Mapa do Trabalho Industrial (ONI/CNI) são explícitos e detalhados por UF, mostrando onde a necessidade é mais urgente. O foco do programa está nas áreas de absorção mais rápida e com maior sinergia com as competências militares.</p>
-                         <ul class="mt-4 space-y-2 text-gray-300">
-                            <li><strong class="text-white">Áreas-foco:</strong> Logística & Transporte, Construção, Operação Industrial e Manutenção & Reparação.</li>
-                        </ul>
-                        <p class="text-xs text-gray-500 mt-3">Fontes: ONI/CNI (Mapa 2025-27), FIEG, FIRJAN, FIEMG, FIESP.</p>
-                    </div>
-                </div>
-                <div class="mt-12 section-card p-8 rounded-2xl max-w-6xl mx-auto">
-                    <h4 class="text-2xl font-bold text-white text-center mb-6">Cenários de Impacto Anual</h4>
-                    <div class="flex justify-center border-b border-gray-700">
-                        <button @click="openTab = 1" :class="{'border-green-400 text-white': openTab === 1, 'border-transparent text-gray-400': openTab !== 1}" class="py-2 px-4 border-b-2 font-medium">Entrada Anual</button>
-                        <button @click="openTab = 2" :class="{'border-green-400 text-white': openTab === 2, 'border-transparent text-gray-400': openTab !== 2}" class="py-2 px-4 border-b-2 font-medium">Pré-Baixa + Incorporados</button>
-                        <button @click="openTab = 3" :class="{'border-green-400 text-white': openTab === 3, 'border-transparent text-gray-400': openTab !== 3}" class="py-2 px-4 border-b-2 font-medium">Multi-Força (MD)</button>
-                    </div>
-                    <div x-show="openTab === 1" class="mt-6">
-                        <h5 class="font-bold text-xl gradient-text">Cenário "Entrada Anual" (Execução Rápida)</h5>
-                        <p class="text-gray-300 mt-2">Capturar 30% dos ~50 mil incorporados anuais do Exército em trilhas curtas e modulares.</p>
-                        <p class="text-2xl font-bold text-white mt-2">Pipeline: ~15.000 egressos qualificados/ano.</p>
-                        <p class="text-sm mt-2 text-gray-400"><strong>Exemplo de Impacto em Goiás:</strong> Com 5% do total, seriam ~750 egressos/ano, cobrindo uma parte significativa do gap de qualificação inicial em áreas estratégicas.</p>
-                    </div>
-                     <div x-show="openTab === 2" x-cloak class="mt-6">
-                        <h5 class="font-bold text-xl gradient-text">Cenário "Pré-Baixa + Incorporados" (Robusto)</h5>
-                        <p class="text-gray-300 mt-2">Além dos recém-incorporados, incluir turmas intensivas para militares nos últimos 6 meses de serviço, que já possuem maior maturidade profissional.</p>
-                        <p class="text-2xl font-bold text-white mt-2">Pipeline: Potencial para dobrar, chegando a ~25.000 egressos/ano.</p>
-                    </div>
-                    <div x-show="openTab === 3" x-cloak class="mt-6">
-                        <h5 class="font-bold text-xl gradient-text">Cenário "Multi-Força" (Escala MD)</h5>
-                        <p class="text-gray-300 mt-2">Expandir o modelo para a Marinha e a Aeronáutica, utilizando a base total de ~85 mil selecionados anuais para as Forças Armadas.</p>
-                        <p class="text-2xl font-bold text-white mt-2">Pipeline: ~25.000 a 30.000 egressos qualificados/ano em escala nacional.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
 
         <!-- Section 6: The Proposal S2I -->
-        <section id="page-6" class="min-h-full flex flex-col justify-center py-20" x-data="{ openTrack: 0 }">
-            <div class="container mx-auto px-4">
-                <div class="text-center mb-16">
-                    <div class="inline-block bg-green-900/50 text-green-300 text-sm font-semibold px-4 py-1 rounded-full border border-green-700/50">A PROPOSTA</div>
-                    <h3 class="text-4xl font-bold tracking-tight text-white mt-4">Programa Nacional "Soldado para a Indústria" (S2I)</h3>
-                    <p class="mt-4 text-lg text-lime-300 font-medium max-w-3xl mx-auto">Apresentamos o plano de ação: seis trilhas de formação rápida e modular para converter o potencial militar em proficiência industrial.</p>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-                    <!-- Trilhas -->
-                    <div @click="openTrack = (openTrack === 1 ? 0 : 1)" class="section-card rounded-lg p-6 cursor-pointer transform hover:scale-105 transition-transform"><div class="flex items-center gap-4"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-400 flex-shrink-0"><path d="M5 18H3c-.6 0-1-.4-1-1V7c0-.6.4-1 1-1h10c.6 0 1 .4 1 1v11"/><path d="M14 9h7c.6 0 1 .4 1 1v10c0 .6-.4 1-1 1h-7c-.6 0-1-.4-1-1V10c0-.6.4-1 1-1Z"/><path d="M17 22v-5"/><path d="M8 6V4c0-.6.4-1 1-1h2c.6 0 1 .4 1 1v2"/><path d="M8 18v-5"/></svg><h4 class="text-xl font-bold text-white">Logística & Transporte</h4></div><div x-show="openTrack === 1" x-transition x-cloak class="mt-4 text-sm text-gray-300"><p><strong>Carga horária:</strong> 80–200h</p><p><strong>Módulos:</strong> Almoxarifado, PCP básico, Operador de Empilhadeira, Roteirização.</p></div></div>
-                    <div @click="openTrack = (openTrack === 2 ? 0 : 2)" class="section-card rounded-lg p-6 cursor-pointer transform hover:scale-105 transition-transform"><div class="flex items-center gap-4"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-400 flex-shrink-0"><path d="M2 13a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"/><path d="M6 13a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"/><path d="M10 13a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"/><path d="M22 13a8 8 0 1 0-16 0"/><path d="m15 13 5.5-5.5"/><path d="M22 13h-2.5"/></svg><h4 class="text-xl font-bold text-white">Operação Industrial</h4></div><div x-show="openTrack === 2" x-transition x-cloak class="mt-4 text-sm text-gray-300"><p><strong>Carga horária:</strong> 80–160h</p><p><strong>Módulos:</strong> Boas práticas (BPF), Segurança (NR-12), 5S, Operação de Linha, CEP básico.</p></div></div>
-                    <div @click="openTrack = (openTrack === 3 ? 0 : 3)" class="section-card rounded-lg p-6 cursor-pointer transform hover:scale-105 transition-transform"><div class="flex items-center gap-4"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-400 flex-shrink-0"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 0 2l-.15.08a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.38a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1 0-2l.15-.08a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg><h4 class="text-xl font-bold text-white">Manutenção & Reparação</h4></div><div x-show="openTrack === 3" x-transition x-cloak class="mt-4 text-sm text-gray-300"><p><strong>Carga horária:</strong> 160–240h</p><p><strong>Módulos:</strong> Mecânica básica, Elétrica Industrial, Metrologia, Leitura de Desenhos.</p></div></div>
-                    <div @click="openTrack = (openTrack === 4 ? 0 : 4)" class="section-card rounded-lg p-6 cursor-pointer transform hover:scale-105 transition-transform"><div class="flex items-center gap-4"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-400 flex-shrink-0"><rect x="2" y="6" width="20" height="8" rx="1"/><path d="M17 14v4"/><path d="M7 14v4"/><path d="M12 14v4"/><path d="M4 6.5v-4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v4"/></svg><h4 class="text-xl font-bold text-white">Construção</h4></div><div x-show="openTrack === 4" x-transition x-cloak class="mt-4 text-sm text-gray-300"><p><strong>Carga horária:</strong> 160–200h</p><p><strong>Módulos:</strong> Obras Civis, Leitura de Projetos, NR-18/35, Máquinas de Terraplanagem.</p></div></div>
-                    <div @click="openTrack = (openTrack === 5 ? 0 : 5)" class="section-card rounded-lg p-6 cursor-pointer transform hover:scale-105 transition-transform"><div class="flex items-center gap-4"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-400 flex-shrink-0"><path d="m12 12-8.5 8.5"/><path d="m12 12 8.5 8.5"/><path d="m12 12 8.5-8.5"/><path d="m12 12-8.5-8.5"/><path d="M20.5 16.5 18 14l-1.5 1.5"/><path d="m3.5 16.5 2.5-2.5 1.5 1.5"/><path d="m12 2 2.5 2.5-1.5 1.5L12 4.5 9.5 7 8 5.5 12 2Z"/><path d="m12 22-2.5-2.5 1.5-1.5L12 19.5l2.5-2.5 1.5 1.5L12 22Z"/></svg><h4 class="text-xl font-bold text-white">Metalmecânica</h4></div><div x-show="openTrack === 5" x-transition x-cloak class="mt-4 text-sm text-gray-300"><p><strong>Carga horária:</strong> 160–240h</p><p><strong>Módulos:</strong> Soldagem (MIG/MAG/TIG), Caldeiraria, Usinagem CNC básica.</p></div></div>
-                    <div @click="openTrack = (openTrack === 6 ? 0 : 6)" class="section-card rounded-lg p-6 cursor-pointer transform hover:scale-105 transition-transform"><div class="flex items-center gap-4"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-400 flex-shrink-0"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg><h4 class="text-xl font-bold text-white">TI de Base</h4></div><div x-show="openTrack === 6" x-transition x-cloak class="mt-4 text-sm text-gray-300"><p><strong>Carga horária:</strong> 120–200h</p><p><strong>Módulos:</strong> Suporte, Redes Industriais, Fundamentos de Automação/CLP.</p></div></div>
-                </div>
+        <section id="proposal" class="py-20" x-data="{ openTrack: 0 }">
+            <div class="text-center mb-12 md:mb-16">
+                <div class="inline-block bg-green-900/50 text-green-300 text-sm font-semibold px-4 py-1 rounded-full border border-green-700/50">A PROPOSTA</div>
+                <h3 class="text-3xl md:text-4xl font-bold tracking-tight text-white mt-4">Programa Nacional "Soldado para a Indústria" (S2I)</h3>
+                <p class="mt-4 text-base md:text-lg text-lime-300 font-medium max-w-3xl mx-auto">Apresentamos o plano de ação: seis trilhas de formação rápida e modular para converter o potencial militar em proficiência industrial.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+                <!-- Trilhas -->
+                <div @click="openTrack = (openTrack === 1 ? 0 : 1)" class="section-card rounded-lg p-6 cursor-pointer transform hover:scale-105 transition-transform"><div class="flex items-center gap-4"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-400 flex-shrink-0"><path d="M5 18H3c-.6 0-1-.4-1-1V7c0-.6.4-1 1-1h10c.6 0 1 .4 1 1v11"/><path d="M14 9h7c.6 0 1 .4 1 1v10c0 .6-.4 1-1 1h-7c-.6 0-1-.4-1-1V10c0-.6.4-1 1-1Z"/><path d="M17 22v-5"/><path d="M8 6V4c0-.6.4-1 1-1h2c.6 0 1 .4 1 1v2"/><path d="M8 18v-5"/></svg><h4 class="text-xl font-bold text-white">Logística & Transporte</h4></div><div x-show="openTrack === 1" x-transition x-cloak class="mt-4 text-sm text-gray-300"><p><strong>Carga horária:</strong> 80–200h</p><p><strong>Módulos:</strong> Almoxarifado, PCP básico, Operador de Empilhadeira, Roteirização.</p></div></div>
+                <div @click="openTrack = (openTrack === 2 ? 0 : 2)" class="section-card rounded-lg p-6 cursor-pointer transform hover:scale-105 transition-transform"><div class="flex items-center gap-4"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-400 flex-shrink-0"><path d="M2 13a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"/><path d="M6 13a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"/><path d="M10 13a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"/><path d="M22 13a8 8 0 1 0-16 0"/><path d="m15 13 5.5-5.5"/><path d="M22 13h-2.5"/></svg><h4 class="text-xl font-bold text-white">Operação Industrial</h4></div><div x-show="openTrack === 2" x-transition x-cloak class="mt-4 text-sm text-gray-300"><p><strong>Carga horária:</strong> 80–160h</p><p><strong>Módulos:</strong> Boas práticas (BPF), Segurança (NR-12), 5S, Operação de Linha, CEP básico.</p></div></div>
+                <div @click="openTrack = (openTrack === 3 ? 0 : 3)" class="section-card rounded-lg p-6 cursor-pointer transform hover:scale-105 transition-transform"><div class="flex items-center gap-4"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-400 flex-shrink-0"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 0 2l-.15.08a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.38a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1 0-2l.15-.08a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg><h4 class="text-xl font-bold text-white">Manutenção & Reparação</h4></div><div x-show="openTrack === 3" x-transition x-cloak class="mt-4 text-sm text-gray-300"><p><strong>Carga horária:</strong> 160–240h</p><p><strong>Módulos:</strong> Mecânica básica, Elétrica Industrial, Metrologia, Leitura de Desenhos.</p></div></div>
+                <div @click="openTrack = (openTrack === 4 ? 0 : 4)" class="section-card rounded-lg p-6 cursor-pointer transform hover:scale-105 transition-transform"><div class="flex items-center gap-4"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-400 flex-shrink-0"><rect x="2" y="6" width="20" height="8" rx="1"/><path d="M17 14v4"/><path d="M7 14v4"/><path d="M12 14v4"/><path d="M4 6.5v-4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v4"/></svg><h4 class="text-xl font-bold text-white">Construção</h4></div><div x-show="openTrack === 4" x-transition x-cloak class="mt-4 text-sm text-gray-300"><p><strong>Carga horária:</strong> 160–200h</p><p><strong>Módulos:</strong> Obras Civis, Leitura de Projetos, NR-18/35, Máquinas de Terraplanagem.</p></div></div>
+                <div @click="openTrack = (openTrack === 5 ? 0 : 5)" class="section-card rounded-lg p-6 cursor-pointer transform hover:scale-105 transition-transform"><div class="flex items-center gap-4"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-400 flex-shrink-0"><path d="m12 12-8.5 8.5"/><path d="m12 12 8.5 8.5"/><path d="m12 12 8.5-8.5"/><path d="m12 12-8.5-8.5"/><path d="M20.5 16.5 18 14l-1.5 1.5"/><path d="m3.5 16.5 2.5-2.5 1.5 1.5"/><path d="m12 2 2.5 2.5-1.5 1.5L12 4.5 9.5 7 8 5.5 12 2Z"/><path d="m12 22-2.5-2.5 1.5-1.5L12 19.5l2.5-2.5 1.5 1.5L12 22Z"/></svg><h4 class="text-xl font-bold text-white">Metalmecânica</h4></div><div x-show="openTrack === 5" x-transition x-cloak class="mt-4 text-sm text-gray-300"><p><strong>Carga horária:</strong> 160–240h</p><p><strong>Módulos:</strong> Soldagem (MIG/MAG/TIG), Caldeiraria, Usinagem CNC básica.</p></div></div>
+                <div @click="openTrack = (openTrack === 6 ? 0 : 6)" class="section-card rounded-lg p-6 cursor-pointer transform hover:scale-105 transition-transform"><div class="flex items-center gap-4"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-400 flex-shrink-0"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg><h4 class="text-xl font-bold text-white">TI de Base</h4></div><div x-show="openTrack === 6" x-transition x-cloak class="mt-4 text-sm text-gray-300"><p><strong>Carga horária:</strong> 120–200h</p><p><strong>Módulos:</strong> Suporte, Redes Industriais, Fundamentos de Automação/CLP.</p></div></div>
             </div>
         </section>
 
 
         <!-- Section 7: Goiás Pilot -->
-        <section id="page-7" class="min-h-full flex flex-col justify-center py-20">
-             <div class="container mx-auto px-4">
-                <div class="text-center mb-16">
-                    <h3 class="text-4xl font-bold tracking-tight text-white">Plano de Execução: Piloto Goiás e Escala Nacional</h3>
-                    <p class="mt-4 text-lg text-lime-300 font-medium max-w-3xl mx-auto">Executamos um plano de duas fases: um piloto robusto em Goiás para validar o modelo e uma expansão nacional para escalar o sucesso.</p>
+        <section id="pilot" class="py-20">
+             <div class="text-center mb-12 md:mb-16">
+                <h3 class="text-3xl md:text-4xl font-bold tracking-tight text-white">Plano de Execução: Piloto Goiás e Escala Nacional</h3>
+                <p class="mt-4 text-base md:text-lg text-lime-300 font-medium max-w-3xl mx-auto">Executamos um plano de duas fases: um piloto robusto em Goiás para validar o modelo e uma expansão nacional para escalar o sucesso.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+                <div class="section-card p-8 rounded-2xl">
+                    <h4 class="text-2xl font-bold text-white">Fase 1: Piloto GOIÁS (12 Meses)</h4>
+                    <ul class="mt-4 space-y-3 text-gray-300">
+                        <li class="flex items-start"><span class="text-green-400 mr-2 mt-1">&#9656;</span><strong>Meta:</strong> Capacitar <strong class="text-white">5.000 militares</strong>.</li>
+                        <li class="flex items-start"><span class="text-green-400 mr-2 mt-1">&#9656;</span><strong>Foco:</strong> Logística, Manutenção, Operação Industrial, Construção e Alimentos.</li>
+                        <li class="flex items-start"><span class="text-green-400 mr-2 mt-1">&#9656;</span><strong>Rede:</strong> 6 a 8 Organizações Militares prioritárias + rede SENAI-GO (escolas e 4 unidades móveis).</li>
+                         <li class="flex items-start"><span class="text-green-400 mr-2 mt-1">&#9656;</span><strong>Entrega de Valor:</strong> Empregabilidade em 90 dias pós-baixa, com cursos casados com vagas ativas na indústria goiana.</li>
+                    </ul>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-                    <div class="section-card p-8 rounded-2xl">
-                        <h4 class="text-2xl font-bold text-white">Fase 1: Piloto GOIÁS (12 Meses)</h4>
-                        <ul class="mt-4 space-y-3 text-gray-300">
-                            <li class="flex items-start"><span class="text-green-400 mr-2 mt-1">&#9656;</span><strong>Meta:</strong> Capacitar <strong class="text-white">5.000 militares</strong>.</li>
-                            <li class="flex items-start"><span class="text-green-400 mr-2 mt-1">&#9656;</span><strong>Foco:</strong> Logística, Manutenção, Operação Industrial, Construção e Alimentos.</li>
-                            <li class="flex items-start"><span class="text-green-400 mr-2 mt-1">&#9656;</span><strong>Rede:</strong> 6 a 8 Organizações Militares prioritárias + rede SENAI-GO (escolas e 4 unidades móveis).</li>
-                             <li class="flex items-start"><span class="text-green-400 mr-2 mt-1">&#9656;</span><strong>Entrega de Valor:</strong> Empregabilidade em 90 dias pós-baixa, com cursos casados com vagas ativas na indústria goiana.</li>
-                        </ul>
-                    </div>
-                     <div class="section-card p-8 rounded-2xl">
-                        <h4 class="text-2xl font-bold text-white">Fase 2: Expansão Nacional (24 Meses)</h4>
-                        <ul class="mt-4 space-y-3 text-gray-300">
-                            <li class="flex items-start"><span class="text-green-400 mr-2 mt-1">&#9656;</span><strong>Meta:</strong> Capacitar <strong class="text-white">20.000 militares</strong> em Goiás.</li>
-                            <li class="flex items-start"><span class="text-green-400 mr-2 mt-1">&#9656;</span><strong>Replicação:</strong> Iniciar operações em <strong class="text-white">10 estados estratégicos</strong> com metas proporcionais à demanda.</li>
-                             <li class="flex items-start"><span class="text-green-400 mr-2 mt-1">&#9656;</span><strong>Estados-alvo:</strong> SP, PR, MG, RJ, BA, CE, PA, AM, SC, PE.</li>
-                             <li class="flex items-start"><span class="text-green-400 mr-2 mt-1">&#9656;</span><strong>Resultado:</strong> Modelo nacional consolidado e auto-sustentável.</li>
-                        </ul>
-                    </div>
+                 <div class="section-card p-8 rounded-2xl">
+                    <h4 class="text-2xl font-bold text-white">Fase 2: Expansão Nacional (24 Meses)</h4>
+                    <ul class="mt-4 space-y-3 text-gray-300">
+                        <li class="flex items-start"><span class="text-green-400 mr-2 mt-1">&#9656;</span><strong>Meta:</strong> Capacitar <strong class="text-white">20.000 militares</strong> em Goiás.</li>
+                        <li class="flex items-start"><span class="text-green-400 mr-2 mt-1">&#9656;</span><strong>Replicação:</strong> Iniciar operações em <strong class="text-white">10 estados estratégicos</strong> com metas proporcionais à demanda.</li>
+                         <li class="flex items-start"><span class="text-green-400 mr-2 mt-1">&#9656;</span><strong>Estados-alvo:</strong> SP, PR, MG, RJ, BA, CE, PA, AM, SC, PE.</li>
+                         <li class="flex items-start"><span class="text-green-400 mr-2 mt-1">&#9656;</span><strong>Resultado:</strong> Modelo nacional consolidado e auto-sustentável.</li>
+                    </ul>
                 </div>
             </div>
         </section>
         
         <!-- Section 8: Economic Impact -->
-        <section id="page-8" class="min-h-full flex flex-col justify-center py-20">
-            <div class="container mx-auto px-4">
-                <div class="text-center mb-16">
-                     <h3 class="text-4xl font-bold tracking-tight text-white">Projeção de Impacto Econômico</h3>
-                     <p class="mt-4 text-lg text-lime-300 font-medium max-w-3xl mx-auto">Quantificamos o ROI do programa, projetando a injeção de centenas de milhões de reais em massa salarial na economia anualmente.</p>
+        <section id="economic-impact" class="py-20">
+            <div class="text-center mb-12 md:mb-16">
+                 <h3 class="text-3xl md:text-4xl font-bold tracking-tight text-white">Projeção de Impacto Econômico</h3>
+                 <p class="mt-4 text-base md:text-lg text-lime-300 font-medium max-w-3xl mx-auto">Quantificamos o ROI do programa, projetando a injeção de centenas de milhões de reais em massa salarial na economia anualmente.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start max-w-6xl mx-auto">
+                <div class="section-card p-8 rounded-2xl">
+                    <h4 class="text-2xl font-bold text-white mb-4">Cenário Piloto: Goiás</h4>
+                    <p class="text-gray-400 mb-6">Simulação baseada na meta de <strong>750 egressos/ano</strong>, distribuídos nas trilhas prioritárias para o estado.</p>
+                    <div class="space-y-4 text-sm">
+                        <div class="grid grid-cols-3 gap-4 font-semibold text-gray-400"><span class="col-span-1">Trilha</span><span>Egressos</span><span class="text-right">Massa Anual</span></div>
+                        <div class="grid grid-cols-3 gap-4 items-center"><span class="font-bold text-white col-span-1">Logística</span><span>263</span><span class="text-right text-green-400">R$ 7,36 mi</span></div>
+                        <div class="grid grid-cols-3 gap-4 items-center"><span class="font-bold text-white col-span-1">Construção</span><span>150</span><span class="text-right text-green-400">R$ 4,27 mi</span></div>
+                        <div class="grid grid-cols-3 gap-4 items-center"><span class="font-bold text-white col-span-1">Manutenção</span><span>150</span><span class="text-right text-green-400">R$ 6,29 mi</span></div>
+                        <div class="grid grid-cols-3 gap-4 items-center"><span class="font-bold text-white col-span-1">Metalmecânica</span><span>113</span><span class="text-right text-green-400">R$ 4,34 mi</span></div>
+                        <div class="grid grid-cols-3 gap-4 items-center"><span class="font-bold text-white col-span-1">Operação</span><span>75</span><span class="text-right text-green-400">R$ 1,98 mi</span></div>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-gray-700">
+                        <p class="text-gray-300 font-semibold">Massa Salarial Anual Estimada (Goiás)</p>
+                        <p class="text-4xl font-extrabold gradient-text">~ R$ 24,2 Milhões</p>
+                    </div>
                 </div>
                 
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start max-w-6xl mx-auto">
+                <div class="space-y-8">
                     <div class="section-card p-8 rounded-2xl">
-                        <h4 class="text-2xl font-bold text-white mb-4">Cenário Piloto: Goiás</h4>
-                        <p class="text-gray-400 mb-6">Simulação baseada na meta de <strong>750 egressos/ano</strong>, distribuídos nas trilhas prioritárias para o estado.</p>
-                        <div class="space-y-4 text-sm">
-                            <div class="grid grid-cols-3 gap-4 font-semibold text-gray-400"><span class="col-span-1">Trilha</span><span>Egressos</span><span class="text-right">Massa Anual</span></div>
-                            <div class="grid grid-cols-3 gap-4 items-center"><span class="font-bold text-white col-span-1">Logística</span><span>263</span><span class="text-right text-green-400">R$ 7,36 mi</span></div>
-                            <div class="grid grid-cols-3 gap-4 items-center"><span class="font-bold text-white col-span-1">Construção</span><span>150</span><span class="text-right text-green-400">R$ 4,27 mi</span></div>
-                            <div class="grid grid-cols-3 gap-4 items-center"><span class="font-bold text-white col-span-1">Manutenção</span><span>150</span><span class="text-right text-green-400">R$ 6,29 mi</span></div>
-                            <div class="grid grid-cols-3 gap-4 items-center"><span class="font-bold text-white col-span-1">Metalmecânica</span><span>113</span><span class="text-right text-green-400">R$ 4,34 mi</span></div>
-                            <div class="grid grid-cols-3 gap-4 items-center"><span class="font-bold text-white col-span-1">Operação</span><span>75</span><span class="text-right text-green-400">R$ 1,98 mi</span></div>
-                        </div>
-                        <div class="mt-6 pt-4 border-t border-gray-700">
-                            <p class="text-gray-300 font-semibold">Massa Salarial Anual Estimada (Goiás)</p>
-                            <p class="text-4xl font-extrabold gradient-text">~ R$ 24,2 Milhões</p>
-                        </div>
+                        <h4 class="text-2xl font-bold text-white mb-2">Cenário Nacional (Multi-Força)</h4>
+                        <p class="text-gray-400 mb-4">Projeção para a meta de <strong>20.000 egressos/ano</strong>, utilizando o mesmo mix de distribuição conservador.</p>
+                        <p class="text-gray-300 font-semibold">Massa Salarial Anual Estimada (Brasil)</p>
+                        <p class="text-5xl font-extrabold gradient-text">~ R$ 645 Milhões</p>
+                        <p class="text-gray-400 mt-2">(Potencial de R$ 806 mi a R$ 967 mi/ano com 25-30 mil egressos)</p>
                     </div>
-                    
-                    <div class="space-y-8">
-                        <div class="section-card p-8 rounded-2xl">
-                            <h4 class="text-2xl font-bold text-white mb-2">Cenário Nacional (Multi-Força)</h4>
-                            <p class="text-gray-400 mb-4">Projeção para a meta de <strong>20.000 egressos/ano</strong>, utilizando o mesmo mix de distribuição conservador.</p>
-                            <p class="text-gray-300 font-semibold">Massa Salarial Anual Estimada (Brasil)</p>
-                            <p class="text-5xl font-extrabold gradient-text">~ R$ 645 Milhões</p>
-                            <p class="text-gray-400 mt-2">(Potencial de R$ 806 mi a R$ 967 mi/ano com 25-30 mil egressos)</p>
-                        </div>
-                        <div class="insight-box p-6 rounded-lg">
-                            <h4 class="font-bold text-lg text-white">Análise Estratégica do Impacto</h4>
-                            <p class="text-gray-300 mt-2">A massa salarial representa a injeção direta de riqueza na economia. Este valor, por sua vez, gera um <strong class="text-white">efeito multiplicador</strong>, aquecendo o comércio local, aumentando a arrecadação de impostos e reduzindo custos sociais. O S2I não é um custo, mas um investimento com retorno econômico e social direto e mensurável.</p>
-                        </div>
+                    <div class="insight-box p-6 rounded-lg">
+                        <h4 class="font-bold text-lg text-white">Análise Estratégica do Impacto</h4>
+                        <p class="text-gray-300 mt-2">A massa salarial representa a injeção direta de riqueza na economia. Este valor, por sua vez, gera um <strong class="text-white">efeito multiplicador</strong>, aquecendo o comércio local, aumentando a arrecadação de impostos e reduzindo custos sociais. O S2I não é um custo, mas um investimento com retorno econômico e social direto e mensurável.</p>
                     </div>
                 </div>
-                 <p class="text-xs text-gray-500 mt-6 text-center">Fontes Salariais (out/2025): Portal Salario, Mentoring, Cargos e Salários, Quero Bolsa. Simulação conservadora com base em medianas e médias nacionais.</p>
             </div>
+             <p class="text-xs text-gray-500 mt-6 text-center">Fontes Salariais (out/2025): Portal Salario, Mentoring, Cargos e Salários, Quero Bolsa. Simulação conservadora com base em medianas e médias nacionais.</p>
         </section>
 
         <!-- Section 9: KPIs and Risks -->
-        <section id="page-9" class="min-h-full flex flex-col justify-center py-20">
-            <div class="container mx-auto px-4">
-                <div class="text-center mb-16">
-                     <h3 class="text-4xl font-bold tracking-tight text-white">Governança e Viabilidade</h3>
-                     <p class="mt-4 text-lg text-lime-300 font-medium max-w-3xl mx-auto">Estabelecemos um 'contrato de impacto' com KPIs claros e um plano de mitigação para garantir a governança e a viabilidade do projeto.</p>
+        <section id="kpis" class="py-20">
+            <div class="text-center mb-12 md:mb-16">
+                 <h3 class="text-3xl md:text-4xl font-bold tracking-tight text-white">Governança e Viabilidade</h3>
+                 <p class="mt-4 text-base md:text-lg text-lime-300 font-medium max-w-3xl mx-auto">Estabelecemos um 'contrato de impacto' com KPIs claros e um plano de mitigação para garantir a governança e a viabilidade do projeto.</p>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
+                <div>
+                    <h4 class="text-2xl md:text-3xl font-bold tracking-tight text-white">Medindo o Sucesso: Contrato de Impacto</h4>
+                     <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="kpi-card p-4 rounded-lg"><p class="text-2xl font-bold text-white">>85%</p><p class="text-gray-300">de Conclusão</p></div>
+                        <div class="kpi-card p-4 rounded-lg"><p class="text-2xl font-bold text-white">>65%</p><p class="text-gray-300">de Emprego em 90 dias</p></div>
+                        <div class="kpi-card p-4 rounded-lg"><p class="text-2xl font-bold text-white">>70%</p><p class="text-gray-300">de Retenção em 12 meses</p></div>
+                         <div class="kpi-card p-4 rounded-lg"><p class="text-2xl font-bold text-white">>20%</p><p class="text-gray-300">Aumento Salarial vs. Mínimo</p></div>
+                    </div>
                 </div>
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
-                    <div>
-                        <h4 class="text-3xl font-bold tracking-tight text-white">Medindo o Sucesso: Contrato de Impacto</h4>
-                         <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div class="kpi-card p-4 rounded-lg"><p class="text-2xl font-bold text-white">>85%</p><p class="text-gray-300">de Conclusão</p></div>
-                            <div class="kpi-card p-4 rounded-lg"><p class="text-2xl font-bold text-white">>65%</p><p class="text-gray-300">de Emprego em 90 dias</p></div>
-                            <div class="kpi-card p-4 rounded-lg"><p class="text-2xl font-bold text-white">>70%</p><p class="text-gray-300">de Retenção em 12 meses</p></div>
-                             <div class="kpi-card p-4 rounded-lg"><p class="text-2xl font-bold text-white">>20%</p><p class="text-gray-300">Aumento Salarial vs. Mínimo</p></div>
-                        </div>
-                    </div>
-                     <div>
-                        <h4 class="text-3xl font-bold tracking-tight text-white">Análise de Riscos e Mitigação</h4>
-                         <ul class="mt-6 space-y-4">
-                            <li>
-                                <p class="font-semibold text-white">Risco: Conflito de agenda (quartel vs. curso).</p>
-                                <p class="text-gray-300 insight-box p-3 rounded-lg mt-1"><strong class="text-green-400">Mitigação:</strong> Turmas modulares, prática concentrada em janelas específicas e uso de EAD.</p>
-                            </li>
-                            <li>
-                                <p class="font-semibold text-white">Risco: Descasamento entre cursos e vagas reais.</p>
-                                <p class="text-gray-300 insight-box p-3 rounded-lg mt-1"><strong class="text-green-400">Mitigação:</strong> Comitê mensal de aderência com federações da indústria para ajustar trilhas trimestralmente.</p>
-                            </li>
-                             <li>
-                                <p class="font-semibold text-white">Risco: Dificuldade de financiamento.</p>
-                                <p class="text-gray-300 insight-box p-3 rounded-lg mt-1"><strong class="text-green-400">Mitigação:</strong> Mix de fontes: ampliar dotação do Soldado Cidadão, enquadrar no NIB e buscar contrapartida de empresas-âncora.</p>
-                            </li>
-                        </ul>
-                    </div>
+                 <div>
+                    <h4 class="text-2xl md:text-3xl font-bold tracking-tight text-white">Análise de Riscos e Mitigação</h4>
+                     <ul class="mt-6 space-y-4">
+                        <li>
+                            <p class="font-semibold text-white">Risco: Conflito de agenda (quartel vs. curso).</p>
+                            <p class="text-gray-300 insight-box p-3 rounded-lg mt-1"><strong class="text-green-400">Mitigação:</strong> Turmas modulares, prática concentrada em janelas específicas e uso de EAD.</p>
+                        </li>
+                        <li>
+                            <p class="font-semibold text-white">Risco: Descasamento entre cursos e vagas reais.</p>
+                            <p class="text-gray-300 insight-box p-3 rounded-lg mt-1"><strong class="text-green-400">Mitigação:</strong> Comitê mensal de aderência com federações da indústria para ajustar trilhas trimestralmente.</p>
+                        </li>
+                         <li>
+                            <p class="font-semibold text-white">Risco: Dificuldade de financiamento.</p>
+                            <p class="text-gray-300 insight-box p-3 rounded-lg mt-1"><strong class="text-green-400">Mitigação:</strong> Mix de fontes: ampliar dotação do Soldado Cidadão, enquadrar no NIB e buscar contrapartida de empresas-âncora.</p>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </section>
 
         <!-- Section 10: Vision -->
-        <section id="page-10" class="min-h-full flex flex-col justify-center text-center py-20">
-             <div class="container mx-auto px-4">
-                <div class="max-w-4xl mx-auto space-y-6">
-                     <h3 class="text-4xl font-bold tracking-tight text-white">Uma Visão de Futuro: Por Que Faz Sentido Agora?</h3>
-                     <p class="mt-4 text-lg text-lime-300 font-medium max-w-3xl mx-auto">Concluímos com a tese central: a convergência de demanda, talento e política pública torna este projeto uma necessidade estratégica imediata.</p>
-                     <div class="text-xl text-gray-300 mt-6 space-y-4 text-left pt-6">
-                         <p class="flex items-start"><span class="text-green-400 text-2xl mr-3">&bull;</span>A <strong class="text-white mx-1">demanda</strong> da indústria é comprovada e massiva (Mapa 2025–27).</p>
-                         <p class="flex items-start"><span class="text-green-400 text-2xl mr-3">&bull;</span>O <strong class="text-white mx-1">fluxo de talentos</strong> é constante e previsível (militares temporários).</p>
-                         <p class="flex items-start"><span class="text-green-400 text-2xl mr-3">&bull;</span>A <strong class="text-white mx-1">janela política e operacional</strong> está aberta (NIB e ACTs MD–SENAI).</p>
-                     </div>
-                    <div class="pt-10">
-                        <a href="#" class="inline-block transition-transform hover:scale-105" title="Departamento de Ensino e Tecnologia do Ministério da Defesa">
-                            <img src="https://i.postimg.cc/hjkBrgdY/det-defesa.png" alt="Logotipo do Departamento de Ensino e Tecnologia do Ministério da Defesa" class="h-24">
-                        </a>
-                    </div>
+        <section id="vision" class="py-20 text-center">
+             <div class="max-w-4xl mx-auto space-y-6">
+                 <h3 class="text-3xl md:text-4xl font-bold tracking-tight text-white">Uma Visão de Futuro: Por Que Faz Sentido Agora?</h3>
+                 <p class="mt-4 text-base md:text-lg text-lime-300 font-medium max-w-3xl mx-auto">Concluímos com a tese central: a convergência de demanda, talento e política pública torna este projeto uma necessidade estratégica imediata.</p>
+                 <div class="text-xl text-gray-300 mt-6 space-y-4 text-left pt-6">
+                     <p class="flex items-start"><span class="text-green-400 text-2xl mr-3">&bull;</span>A <strong class="text-white mx-1">demanda</strong> da indústria é comprovada e massiva (Mapa 2025–27).</p>
+                     <p class="flex items-start"><span class="text-green-400 text-2xl mr-3">&bull;</span>O <strong class="text-white mx-1">fluxo de talentos</strong> é constante e previsível (militares temporários).</p>
+                     <p class="flex items-start"><span class="text-green-400 text-2xl mr-3">&bull;</span>A <strong class="text-white mx-1">janela política e operacional</strong> está aberta (NIB e ACTs MD–SENAI).</p>
+                 </div>
+                <div class="pt-10">
+                    <a href="#" class="inline-block transition-transform hover:scale-105" title="Departamento de Ensino e Tecnologia do Ministério da Defesa">
+                        <img src="https://i.postimg.cc/hjkBrgdY/det-defesa.png" alt="Logotipo do Departamento de Ensino e Tecnologia do Ministério da Defesa" class="h-24">
+                    </a>
                 </div>
             </div>
         </section>
 
     </main>
     
-    <!-- Navigation Arrows -->
-    <div x-show="totalPages > 1" x-cloak class="fixed bottom-0 left-1/2 -translate-x-1/2 z-50 flex items-center gap-4 p-2 rounded-t-lg section-card">
-        <button @click="prevPage()" :disabled="currentPage === 0" class="p-2 rounded-full disabled:opacity-30 disabled:cursor-not-allowed hover:bg-gray-700 transition">
-            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
-        </button>
-        <span class="text-sm text-gray-400" x-text="`${currentPage + 1} / ${totalPages}`"></span>
-        <button @click="nextPage()" :disabled="currentPage === totalPages - 1" class="p-2 rounded-full disabled:opacity-30 disabled:cursor-not-allowed hover:bg-gray-700 transition">
-            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-        </button>
-    </div>
-
     <script>
-        document.addEventListener('alpine:init', () => {
-            Alpine.data('pageNavigation', () => ({
-                currentPage: 0,
-                totalPages: 0,
-                init() {
-                    this.$nextTick(() => {
-                        const sections = Array.from(document.querySelectorAll('#main-content > section'));
-                        this.totalPages = sections.length;
-                        
-                        const observer = new IntersectionObserver((entries) => {
-                            entries.forEach(entry => {
-                                if (entry.isIntersecting) {
-                                    const pageIndex = parseInt(entry.target.id.split('-')[1]);
-                                    this.currentPage = pageIndex;
-                                }
-                            });
-                        }, { threshold: 0.5, root: document.querySelector('#main-content') });
-
-                        sections.forEach(section => observer.observe(section));
-                    });
-                },
-                nextPage() {
-                    if (this.currentPage < this.totalPages - 1) {
-                        this.scrollToPage(this.currentPage + 1);
-                    }
-                },
-                prevPage() {
-                    if (this.currentPage > 0) {
-                        this.scrollToPage(this.currentPage - 1);
-                    }
-                },
-                scrollToPage(pageIndex) {
-                    document.getElementById(`page-${pageIndex}`).scrollIntoView({ behavior: 'smooth' });
-                }
-            }));
-        });
-
         const stateData = {
             'AC': { name: 'Acre', demand: 10390, unemployment: '8.2%', sectors: ['Construção', 'Serviços Gerais', 'Adm.'] },
             'AL': { name: 'Alagoas', demand: 78781, unemployment: '9.9%', sectors: ['Agropecuária', 'Construção', 'Logística'] },
@@ -602,4 +405,3 @@
 
 </body>
 </html>
-
