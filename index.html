@@ -1,407 +1,642 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Infográfico Interativo - Projeto Vetor Industrial</title>
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Google Fonts: Space Grotesk -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Alpine.js for interactivity -->
-    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    
-    <!-- Custom Styles -->
-    <style>
-        html {
-            scroll-behavior: smooth;
-        }
-        body {
-            font-family: 'Space Grotesk', sans-serif;
-            background-color: #101410;
-            color: #E0E0E0;
-            background-image: radial-gradient(rgba(74, 222, 128, 0.05) 1px, transparent 1px);
-            background-size: 20px 20px;
-        }
-        .gradient-text {
-            background: linear-gradient(90deg, #4ade80, #bef264);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .section-card {
-            background-color: rgba(22, 34, 23, 0.8);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(74, 222, 128, 0.15);
-        }
-        
-        .map-container { position: relative; max-width: 800px; margin: auto; }
-        .map-image { width: 100%; height: auto; display: block; }
-        .state-hotspot { position: absolute; background-color: transparent; border-radius: 50%; cursor: pointer; transition: all 0.3s ease; transform: translate(-50%, -50%); }
-        .state-hotspot:hover, .state-hotspot.active { animation: pulse-animation 1.5s infinite; }
+import React, { useState } from 'react';
+import { 
+  Trophy, 
+  TrendingUp, 
+  Map, 
+  Zap, 
+  BookOpen, 
+  Building2, 
+  Cpu, 
+  Lightbulb, 
+  BarChart3, 
+  Info, 
+  ArrowUpRight, 
+  AlertCircle,
+  CheckCircle2,
+  Sprout,      
+  Scale,       
+  Target,      
+  ArrowRight,
+  MousePointer2 // Novo ícone para indicar interação
+} from 'lucide-react';
 
-        @keyframes pulse-animation {
-            0% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.7); }
-            100% { box-shadow: 0 0 0 25px rgba(74, 222, 128, 0); }
-        }
-        
-        .insight-box { background-color: rgba(34, 197, 94, 0.05); border-left: 4px solid #4ade80; }
-        .kpi-card { border-left: 4px solid #bef264; background-color: rgba(190, 242, 100, 0.05); }
+const IBIDDashboard = () => {
+  const [activeTab, setActiveTab] = useState('overview');
+  const [selectedPillar, setSelectedPillar] = useState(0);
 
-        [x-cloak] { display: none !important; }
+  // Componente de Dica de Interação
+  const InteractionHint = ({ text, className = "" }) => (
+    <div className={`flex items-center gap-2 text-sm text-blue-600 font-semibold bg-blue-50 px-3 py-1.5 rounded-full w-fit mb-2 animate-pulse ${className}`}>
+      <MousePointer2 size={16} />
+      <span>{text}</span>
+    </div>
+  );
 
-    </style>
-</head>
-<body x-data>
+  // Dados extraídos do relatório
+  const rankingData = [
+    { rank: 1, uf: 'SP', name: 'São Paulo', score: 0.872, region: 'Sudeste', status: 'Líder' },
+    { rank: 2, uf: 'SC', name: 'Santa Catarina', score: 0.449, region: 'Sul', status: 'Climber' },
+    { rank: 3, uf: 'PR', name: 'Paraná', score: 0.413, region: 'Sul', status: 'Climber' },
+    { rank: 4, uf: 'RJ', name: 'Rio de Janeiro', score: 0.410, region: 'Sudeste', status: 'Estável' },
+    { rank: 5, uf: 'RS', name: 'Rio Grande do Sul', score: 0.398, region: 'Sul', status: 'Estável' },
+    { rank: 6, uf: 'MG', name: 'Minas Gerais', score: 0.368, region: 'Sudeste', status: 'Estável' },
+    { rank: 7, uf: 'DF', name: 'Distrito Federal', score: 0.291, region: 'Centro-Oeste', status: 'Queda' },
+    { rank: 8, uf: 'ES', name: 'Espírito Santo', score: 0.266, region: 'Sudeste', status: 'Estável' },
+    { rank: 9, uf: 'GO', name: 'Goiás', score: 0.251, region: 'Centro-Oeste', status: 'Estável' },
+    { rank: 10, uf: 'MS', name: 'Mato Grosso do Sul', score: 0.234, region: 'Centro-Oeste', status: 'Estável' },
+  ];
 
-    <!-- Header -->
-    <header class="sticky top-0 z-50 section-card shadow-lg">
-        <div class="container mx-auto px-4 md:px-6 py-3 flex justify-between items-center">
-            <div>
-                <div class="flex items-center space-x-3">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-400"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
-                    <h1 class="text-lg md:text-xl font-bold text-white tracking-wider">PROJETO VETOR INDUSTRIAL</h1>
-                </div>
-            </div>
-            <div>
-                <img src="https://i.postimg.cc/ht2WzKy8/senai-MD.png" alt="Logotipo da Parceria SENAI e Ministério da Defesa" class="h-10 md:h-12">
-            </div>
+  const climbers = [
+    { uf: 'PR', name: 'Paraná', growth: '6ª ➔ 3ª', detail: 'Consistência em resultados.' },
+    { uf: 'PB', name: 'Paraíba', growth: '18ª ➔ 15ª', detail: 'Força de trabalho qualificada.' },
+    { uf: 'PI', name: 'Piauí', growth: '21ª ➔ 18ª', detail: 'Impacto científico relevante.' },
+    { uf: 'AP', name: 'Amapá', growth: '25ª ➔ 23ª', detail: 'Melhora gradual.' }
+  ];
+
+  const pillars = [
+    {
+      id: 0,
+      title: 'Instituições',
+      icon: <Building2 className="w-6 h-6" />,
+      desc: 'Ambiente regulatório, político e de negócios.',
+      top: ['SP (1º)', 'SC (2º)', 'GO (3º)'],
+      insight: 'Goiás surpreende em 3º lugar impulsionado pelo Ambiente Regulatório. A região Norte (AM, RO, RR) apresenta desempenho acima da média neste pilar, mostrando avanços institucionais.',
+      color: 'bg-blue-500'
+    },
+    {
+      id: 1,
+      title: 'Capital Humano',
+      icon: <BookOpen className="w-6 h-6" />,
+      desc: 'Educação básica, superior e P&D.',
+      top: ['SP (1º)', 'DF (2º)', 'RJ (3º)'],
+      insight: 'Correlação forte entre talentos e inovação. Ceará destaca-se na 5ª posição em P&D, apesar do ranking geral intermediário.',
+      color: 'bg-indigo-500'
+    },
+    {
+      id: 2,
+      title: 'Infraestrutura',
+      icon: <Zap className="w-6 h-6" />,
+      desc: 'TICs, logística e infraestrutura geral.',
+      top: ['SP (1º)', 'SC (2º)', 'DF (3º)'],
+      insight: 'Disparidade regional clara: Sul/Sudeste/CO acima da média; Norte/Nordeste abaixo. Destaque positivo para o Nordeste em Sustentabilidade (Energia Renovável).',
+      color: 'bg-yellow-500'
+    },
+    {
+      id: 3,
+      title: 'Economia',
+      icon: <TrendingUp className="w-6 h-6" />,
+      desc: 'Crédito, investimento e escala de mercado.',
+      top: ['SP (1º)', 'SC (2º)', 'RS (3º)'],
+      insight: 'DF amarga a última posição (27º) neste pilar devido à dependência do setor público e baixo crédito privado. RJ sofre com crédito (26º).',
+      color: 'bg-green-500'
+    },
+    {
+      id: 4,
+      title: 'Negócios',
+      icon: <BriefcaseIcon className="w-6 h-6" />,
+      desc: 'Sofisticação empresarial e absorção de conhecimento.',
+      top: ['SP (1º)', 'RS (2º)', 'DF (3º)'],
+      insight: 'Espírito Santo e Amazonas destacam-se em "Absorção de Conhecimento", indicando potencial para transferência tecnológica.',
+      color: 'bg-orange-500'
+    },
+    {
+      id: 5,
+      title: 'Conhecimento e Tecnologia',
+      icon: <Cpu className="w-6 h-6" />,
+      desc: 'Patentes, publicações e startups.',
+      top: ['SP (1º)', 'PR (2º)', 'SC (3º)'],
+      insight: 'Maior abismo do ranking: Diferença de 0,547 pontos entre SP e PR. Piauí surpreende com 3º lugar em "Impacto do Conhecimento".',
+      color: 'bg-purple-500'
+    },
+    {
+      id: 6,
+      title: 'Economia Criativa',
+      icon: <Lightbulb className="w-6 h-6" />,
+      desc: 'Ativos intangíveis, marcas e criatividade digital.',
+      top: ['SP (1º)', 'RJ (2º)', 'SC (3º)'],
+      insight: 'Pilar com maior concentração. Vantagem massiva de SP. RJ mantém força histórica em ativos intangíveis e cultura.',
+      color: 'bg-pink-500'
+    }
+  ];
+
+  // Componente de Botão de Navegação
+  const NavButton = ({ id, label, icon, highlight = false }) => (
+    <button
+      onClick={() => setActiveTab(id)}
+      className={`flex items-center gap-2 px-4 py-3 rounded-lg transition-all duration-300 relative group ${
+        activeTab === id 
+          ? 'bg-slate-800 text-white shadow-lg ring-2 ring-offset-2 ring-slate-300' 
+          : highlight 
+            ? 'bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-100 hover:scale-105'
+            : 'bg-white text-slate-600 hover:bg-slate-100 hover:scale-105 border border-slate-200'
+      }`}
+    >
+      {icon}
+      <span className="font-medium">{label}</span>
+      {/* Tooltip simples */}
+      <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-20">
+        Ir para {label}
+      </span>
+    </button>
+  );
+
+  return (
+    <div className="min-h-screen bg-slate-50 font-sans text-slate-800 p-4 md:p-8">
+      {/* Cabeçalho */}
+      <header className="mb-8">
+        <div className="flex justify-end mb-4">
+            <img 
+              src="https://i.postimg.cc/x1pYp13c/det_fieg.png" 
+              alt="Logo FIEG" 
+              className="h-12 md:h-16 object-contain" 
+            />
         </div>
-    </header>
 
-    <main class="container mx-auto p-4 md:p-8">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
+          <div>
+            <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-700 to-teal-500">
+              IBID 2025
+            </h1>
+            <p className="text-slate-500 text-lg">Uma abordagem interativa sobre o Índice Brasil de Inovação e Desenvolvimento</p>
+          </div>
+          <div className="mt-4 md:mt-0 bg-white px-4 py-2 rounded-full shadow-sm border border-slate-200 text-sm text-slate-600">
+            Fonte: INPI | Panorama da Inovação
+          </div>
+        </div>
+      </header>
 
-        <!-- Section 1: Introduction -->
-        <section id="intro" class="min-h-[60vh] md:min-h-[80vh] flex items-center justify-center text-center py-16">
-            <div class="max-w-4xl mx-auto space-y-6">
-                 <h2 class="text-4xl sm:text-5xl md:text-7xl font-extrabold tracking-tight text-white">
-                    Qualificando Heróis para a <span class="gradient-text">Indústria 4.0</span>
-                </h2>
-                <p class="text-base sm:text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">
-                    Este infográfico apresenta o 'Vetor Industrial', um programa nacional que transforma o serviço militar em uma carreira de sucesso na indústria brasileira.
-                </p>
-            </div>
-        </section>
+      {/* Menu de Navegação */}
+      <div className="mb-8">
+        <InteractionHint text="Clique nas abas abaixo para alternar as visões do painel" className="mb-3" />
+        <div className="flex flex-wrap gap-4">
+          <NavButton id="overview" label="Visão Geral" icon={<BarChart3 size={18} />} />
+          <NavButton id="ranking" label="Ranking Detalhado" icon={<Trophy size={18} />} />
+          <NavButton id="pillars" label="7 Pilares" icon={<Zap size={18} />} />
+          <NavButton id="goias" label="Goiás em Foco" icon={<Map size={18} />} highlight={true} />
+          <NavButton id="insights" label="Insights & Análises" icon={<Info size={18} />} />
+        </div>
+      </div>
 
-        <!-- Section 2: The Challenge -->
-        <section id="challenge" class="py-20" x-data="{ showAnalysis: false }">
-            <div class="text-center mb-12 md:mb-16">
-                <h3 class="text-3xl md:text-4xl font-bold tracking-tight text-white">O Cenário: Demanda Industrial e a Janela de Oportunidade</h3>
-                <p class="mt-4 text-base md:text-lg text-lime-300 font-medium max-w-3xl mx-auto">Analisamos a demanda massiva por 2,2 milhões de novos profissionais como a oportunidade estratégica para inserir um capital humano de elite.</p>
-            </div>
-            
-             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 text-center max-w-6xl mx-auto">
-                 <div class="section-card rounded-2xl p-6 md:p-8">
-                    <p class="text-4xl md:text-5xl font-extrabold gradient-text">14 Milhões</p>
-                    <p class="mt-2 text-base md:text-lg text-gray-300">De pessoas precisarão de formação ligada à indústria no Brasil.</p>
-                 </div>
-                 <div class="section-card rounded-2xl p-6 md:p-8 border-2 border-green-400 shadow-lg shadow-green-500/10">
-                    <p class="text-4xl md:text-5xl font-extrabold gradient-text">2,2 Milhões</p>
-                    <p class="mt-2 text-base md:text-lg text-gray-300">É a demanda por <span class="text-white font-semibold">formação inicial</span> para novas vagas. <br><strong class="text-green-400">(NOSSO FOCO)</strong></p>
-                 </div>
-                 <div class="section-card rounded-2xl p-6 md:p-8">
-                    <p class="text-4xl md:text-5xl font-extrabold gradient-text">11,8 Milhões</p>
-                    <p class="mt-2 text-base md:text-lg text-gray-300">De profissionais já empregados precisarão de <span class="text-white font-semibold">aperfeiçoamento</span>.</p>
-                 </div>
-            </div>
-             <p class="text-xs text-gray-500 mt-6 text-center">Fonte: Observatório Nacional da Indústria, Mapa do Trabalho Industrial (Projeção 2025–2027).</p>
-        </section>
-
-        <!-- Section 3: The Asset & Precedent -->
-        <section id="asset" class="py-20">
-            <div class="text-center mb-12 md:mb-16">
-                <h3 class="text-3xl md:text-4xl font-bold tracking-tight text-white">O Ativo Estratégico e o Alicerce Existente</h3>
-                <p class="mt-4 text-base md:text-lg text-lime-300 font-medium max-w-3xl mx-auto">Conectamos um ativo humano com disciplina e resiliência a um modelo de qualificação já validado pelo sucesso do Projeto Soldado Cidadão.</p>
-            </div>
-             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start max-w-6xl mx-auto">
-                <div>
-                     <h4 class="text-2xl font-bold text-white mb-4">Capital Humano de Elite</h4>
-                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div class="section-card rounded-lg p-4"><strong class="text-green-400">Disciplina e Resiliência:</strong> Redução do turnover e aumento da eficiência.</div>
-                        <div class="section-card rounded-lg p-4"><strong class="text-green-400">Liderança e Equipe:</strong> Potenciais líderes de chão de fábrica.</div>
-                        <div class="section-card rounded-lg p-4"><strong class="text-green-400">Raciocínio Lógico:</strong> Otimização de processos e manutenção preditiva.</div>
-                        <div class="section-card rounded-lg p-4"><strong class="text-green-400">Aptidão Tecnológica:</strong> Rápida adaptação à Indústria 4.0.</div>
-                    </div>
-                </div>
-                <div class="mt-8 lg:mt-0">
-                    <div class="insight-box p-6 rounded-lg">
-                        <h4 class="font-bold text-2xl text-white">Fundação Comprovada: Projeto Soldado Cidadão</h4>
-                        <p class="text-gray-300 mt-2">Há 20 anos, o Ministério da Defesa opera o bem-sucedido Projeto Soldado Cidadão. O Vetor Industrial é a sua <strong class="text-white">evolução estratégica</strong>: escalar e direcionar este modelo para a demanda industrial atual, aproveitando os Acordos de Cooperação Técnica (ACTs) já existentes.</p>
-                        <p class="text-xs text-gray-500 mt-3">Fonte: Portal de Serviços e Informações do Brasil (Dados de 2024).</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Section 4: Opportunities & Gains -->
-        <section id="opportunities" class="py-20" x-data="{ openTab: 'militares' }">
-            <div class="text-center mb-12 md:mb-16">
-                 <h3 class="text-3xl md:text-4xl font-bold tracking-tight text-white">Quadro Estratégico: Oportunidades e Ganhos</h3>
-                 <p class="mt-4 text-base md:text-lg text-lime-300 font-medium max-w-3xl mx-auto">Demonstramos o ciclo virtuoso do projeto, detalhando os ganhos estratégicos para as Forças Armadas, a Indústria e a Nação.</p>
-            </div>
-            <div class="section-card p-4 sm:p-8 rounded-2xl max-w-5xl mx-auto">
-                <div class="flex flex-col sm:flex-row justify-center border-b border-gray-700 mb-6">
-                    <button @click="openTab = 'militares'" :class="{'border-green-400 text-white': openTab === 'militares', 'border-transparent text-gray-400 hover:text-white': openTab !== 'militares'}" class="py-3 px-4 sm:px-6 border-b-2 font-semibold transition text-sm sm:text-base">Forças Armadas</button>
-                    <button @click="openTab = 'industria'" :class="{'border-green-400 text-white': openTab === 'industria', 'border-transparent text-gray-400 hover:text-white': openTab !== 'industria'}" class="py-3 px-4 sm:px-6 border-b-2 font-semibold transition text-sm sm:text-base">Indústria Nacional</button>
-                    <button @click="openTab = 'governo'" :class="{'border-green-400 text-white': openTab === 'governo', 'border-transparent text-gray-400 hover:text-white': openTab !== 'governo'}" class="py-3 px-4 sm:px-6 border-b-2 font-semibold transition text-sm sm:text-base">Governo e Sociedade</button>
-                </div>
-                <div x-show="openTab === 'militares'"><div class="grid grid-cols-1 md:grid-cols-2 gap-6"><div class="insight-box p-4 rounded-lg"><h5 class="font-bold text-white">Legado de Empregabilidade</h5><p class="text-gray-300 text-sm">Oferece uma transição de carreira digna e estruturada para quem serviu à nação.</p></div><div class="insight-box p-4 rounded-lg"><h5 class="font-bold text-white">Valorização do Serviço Militar</h5><p class="text-gray-300 text-sm">Torna o serviço militar temporário mais atrativo, oferecendo uma dupla certificação.</p></div></div></div>
-                <div x-show="openTab === 'industria'" x-cloak><div class="grid grid-cols-1 md:grid-cols-2 gap-6"><div class="insight-box p-4 rounded-lg"><h5 class="font-bold text-white">Pipeline de Talentos Premium</h5><p class="text-gray-300 text-sm">Acesso a profissionais com disciplina, resiliência e ética de trabalho acima da média.</p></div><div class="insight-box p-4 rounded-lg"><h5 class="font-bold text-white">Redução de Custos</h5><p class="text-gray-300 text-sm">Diminui drasticamente os custos e o tempo de recrutamento e seleção para vagas técnicas.</p></div></div></div>
-                <div x-show="openTab === 'governo'" x-cloak><div class="grid grid-cols-1 md:grid-cols-2 gap-6"><div class="insight-box p-4 rounded-lg"><h5 class="font-bold text-white">Soberania Industrial</h5><p class="text-gray-300 text-sm">Fortalece a base industrial do país, alinhado à Nova Indústria Brasil (NIB).</p></div><div class="insight-box p-4 rounded-lg"><h5 class="font-bold text-white">Impacto Econômico</h5><p class="text-gray-300 text-sm">Injeta centenas de milhões em massa salarial na economia anualmente.</p></div></div></div>
-            </div>
-        </section>
-
-
-        <!-- Section 5: Map of Opportunities -->
-        <section id="map" class="py-20">
-             <div class="text-center mb-12 md:mb-16">
-                <h3 class="text-3xl md:text-4xl font-bold tracking-tight text-white">Mapa Tático de Oportunidades</h3>
-                <p class="mt-4 text-base md:text-lg text-lime-300 font-medium max-w-3xl mx-auto">Explore o mapa tático para cruzar a demanda industrial com a disponibilidade de mão de obra e direcione os recursos com precisão cirúrgica.</p>
-            </div>
-            
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <div class="lg:col-span-2 section-card rounded-2xl p-4 md:p-6">
-                    <div class="map-container">
-                        <img src="https://i.postimg.cc/vmKVyPjr/doodle-freehand-drawing-of-brazil-map-free-png-1.webp" alt="Mapa do Brasil" class="map-image">
-                        <!-- Hotspots -->
-                        <div id="RR" class="state-hotspot" style="top: 13%; left: 32%; width: 10%; height: 12%;"></div><div id="AP" class="state-hotspot" style="top: 15%; left: 53%; width: 10%; height: 10%;"></div><div id="AM" class="state-hotspot" style="top: 31%; left: 27%; width: 20%; height: 18%;"></div><div id="PA" class="state-hotspot" style="top: 33%; left: 50%; width: 18%; height: 20%;"></div><div id="MA" class="state-hotspot" style="top: 41%; left: 66%; width: 10%; height: 12%;"></div><div id="PI" class="state-hotspot" style="top: 46%; left: 69%; width: 8%; height: 12%;"></div><div id="CE" class="state-hotspot" style="top: 39%; left: 74%; width: 8%; height: 8%;"></div><div id="RN" class="state-hotspot" style="top: 41%; left: 80%; width: 6%; height: 6%;"></div><div id="PB" class="state-hotspot" style="top: 45%; left: 81%; width: 6%; height: 6%;"></div><div id="PE" class="state-hotspot" style="top: 49%; left: 79%; width: 8%; height: 8%;"></div><div id="AL" class="state-hotspot" style="top: 53%; left: 81%; width: 6%; height: 6%;"></div><div id="SE" class="state-hotspot" style="top: 56%; left: 79%; width: 6%; height: 6%;"></div><div id="BA" class="state-hotspot" style="top: 58%; left: 69%; width: 15%; height: 18%;"></div><div id="AC" class="state-hotspot" style="top: 54%; left: 19%; width: 8%; height: 10%;"></div><div id="RO" class="state-hotspot" style="top: 57%; left: 29%; width: 10%; height: 12%;"></div><div id="MT" class="state-hotspot" style="top: 60%; left: 45%; width: 18%; height: 16%;"></div><div id="TO" class="state-hotspot" style="top: 51%; left: 59%; width: 10%; height: 16%;"></div><div id="GO" class="state-hotspot" style="top: 67%; left: 57%; width: 12%; height: 12%;"></div><div id="DF" class="state-hotspot" style="top: 66%; left: 61%; width: 5%; height: 5%;"></div><div id="MS" class="state-hotspot" style="top: 79%; left: 48%; width: 12%; height: 12%;"></div><div id="MG" class="state-hotspot" style="top: 74%; left: 65%; width: 15%; height: 15%;"></div><div id="ES" class="state-hotspot" style="top: 77%; left: 74%; width: 6%; height: 8%;"></div><div id="RJ" class="state-hotspot" style="top: 83%; left: 70%; width: 8%; height: 6%;"></div><div id="SP" class="state-hotspot" style="top: 81%; left: 58%; width: 12%; height: 10%;"></div><div id="PR" class="state-hotspot" style="top: 89%; left: 54%; width: 12%; height: 8%;"></div><div id="SC" class="state-hotspot" style="top: 93%; left: 56%; width: 8%; height: 8%;"></div><div id="RS" class="state-hotspot" style="top: 94%; left: 50%; width: 15%; height: 15%;"></div>
-                    </div>
-                </div>
-                
-                <div id="map-info-panel" class="section-card rounded-2xl p-6 mt-8 lg:mt-0 flex flex-col justify-center">
-                     <div id="info-content" class="space-y-3">
-                        <h4 class="text-2xl font-bold text-white text-center" id="info-title">Selecione um Estado</h4>
-                        <div id="info-details" class="hidden">
-                            <div>
-                                <p class="text-sm font-medium text-gray-400">Demanda Total a Qualificar (até 2027)</p>
-                                <p class="text-3xl font-extrabold gradient-text" id="info-demand">-</p>
-                            </div>
-                            <div class="mt-3">
-                                <p class="text-sm font-medium text-gray-400">Taxa de Desocupação (1T/2025)</p>
-                                <p id="info-unemployment" class="text-xl font-bold">-</p>
-                            </div>
-                            <div class="mt-3">
-                                <p class="text-sm font-medium text-gray-400">Principais Áreas-Alvo (Demanda)</p>
-                                <ul id="info-sectors" class="list-none mt-1 space-y-1 text-gray-200"></ul>
-                            </div>
-                        </div>
-                         <p class="text-xs text-gray-500 mt-4 text-center">Fontes: Mapa do Trabalho Industrial (2025–27); PNAD Contínua, IBGE (1T/2025).</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Section 6: The Proposal S2I -->
-        <section id="proposal" class="py-20" x-data="{ openTrack: 0 }">
-            <div class="text-center mb-12 md:mb-16">
-                <div class="inline-block bg-green-900/50 text-green-300 text-sm font-semibold px-4 py-1 rounded-full border border-green-700/50">A PROPOSTA</div>
-                <h3 class="text-3xl md:text-4xl font-bold tracking-tight text-white mt-4">Programa Nacional "Soldado para a Indústria" (S2I)</h3>
-                <p class="mt-4 text-base md:text-lg text-lime-300 font-medium max-w-3xl mx-auto">Apresentamos o plano de ação: seis trilhas de formação rápida e modular para converter o potencial militar em proficiência industrial.</p>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-                <!-- Trilhas -->
-                <div @click="openTrack = (openTrack === 1 ? 0 : 1)" class="section-card rounded-lg p-6 cursor-pointer transform hover:scale-105 transition-transform"><div class="flex items-center gap-4"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-400 flex-shrink-0"><path d="M5 18H3c-.6 0-1-.4-1-1V7c0-.6.4-1 1-1h10c.6 0 1 .4 1 1v11"/><path d="M14 9h7c.6 0 1 .4 1 1v10c0 .6-.4 1-1 1h-7c-.6 0-1-.4-1-1V10c0-.6.4-1 1-1Z"/><path d="M17 22v-5"/><path d="M8 6V4c0-.6.4-1 1-1h2c.6 0 1 .4 1 1v2"/><path d="M8 18v-5"/></svg><h4 class="text-xl font-bold text-white">Logística & Transporte</h4></div><div x-show="openTrack === 1" x-transition x-cloak class="mt-4 text-sm text-gray-300"><p><strong>Carga horária:</strong> 80–200h</p><p><strong>Módulos:</strong> Almoxarifado, PCP básico, Operador de Empilhadeira, Roteirização.</p></div></div>
-                <div @click="openTrack = (openTrack === 2 ? 0 : 2)" class="section-card rounded-lg p-6 cursor-pointer transform hover:scale-105 transition-transform"><div class="flex items-center gap-4"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-400 flex-shrink-0"><path d="M2 13a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"/><path d="M6 13a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"/><path d="M10 13a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"/><path d="M22 13a8 8 0 1 0-16 0"/><path d="m15 13 5.5-5.5"/><path d="M22 13h-2.5"/></svg><h4 class="text-xl font-bold text-white">Operação Industrial</h4></div><div x-show="openTrack === 2" x-transition x-cloak class="mt-4 text-sm text-gray-300"><p><strong>Carga horária:</strong> 80–160h</p><p><strong>Módulos:</strong> Boas práticas (BPF), Segurança (NR-12), 5S, Operação de Linha, CEP básico.</p></div></div>
-                <div @click="openTrack = (openTrack === 3 ? 0 : 3)" class="section-card rounded-lg p-6 cursor-pointer transform hover:scale-105 transition-transform"><div class="flex items-center gap-4"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-400 flex-shrink-0"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 0 2l-.15.08a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.38a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1 0-2l.15-.08a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg><h4 class="text-xl font-bold text-white">Manutenção & Reparação</h4></div><div x-show="openTrack === 3" x-transition x-cloak class="mt-4 text-sm text-gray-300"><p><strong>Carga horária:</strong> 160–240h</p><p><strong>Módulos:</strong> Mecânica básica, Elétrica Industrial, Metrologia, Leitura de Desenhos.</p></div></div>
-                <div @click="openTrack = (openTrack === 4 ? 0 : 4)" class="section-card rounded-lg p-6 cursor-pointer transform hover:scale-105 transition-transform"><div class="flex items-center gap-4"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-400 flex-shrink-0"><rect x="2" y="6" width="20" height="8" rx="1"/><path d="M17 14v4"/><path d="M7 14v4"/><path d="M12 14v4"/><path d="M4 6.5v-4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v4"/></svg><h4 class="text-xl font-bold text-white">Construção</h4></div><div x-show="openTrack === 4" x-transition x-cloak class="mt-4 text-sm text-gray-300"><p><strong>Carga horária:</strong> 160–200h</p><p><strong>Módulos:</strong> Obras Civis, Leitura de Projetos, NR-18/35, Máquinas de Terraplanagem.</p></div></div>
-                <div @click="openTrack = (openTrack === 5 ? 0 : 5)" class="section-card rounded-lg p-6 cursor-pointer transform hover:scale-105 transition-transform"><div class="flex items-center gap-4"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-400 flex-shrink-0"><path d="m12 12-8.5 8.5"/><path d="m12 12 8.5 8.5"/><path d="m12 12 8.5-8.5"/><path d="m12 12-8.5-8.5"/><path d="M20.5 16.5 18 14l-1.5 1.5"/><path d="m3.5 16.5 2.5-2.5 1.5 1.5"/><path d="m12 2 2.5 2.5-1.5 1.5L12 4.5 9.5 7 8 5.5 12 2Z"/><path d="m12 22-2.5-2.5 1.5-1.5L12 19.5l2.5-2.5 1.5 1.5L12 22Z"/></svg><h4 class="text-xl font-bold text-white">Metalmecânica</h4></div><div x-show="openTrack === 5" x-transition x-cloak class="mt-4 text-sm text-gray-300"><p><strong>Carga horária:</strong> 160–240h</p><p><strong>Módulos:</strong> Soldagem (MIG/MAG/TIG), Caldeiraria, Usinagem CNC básica.</p></div></div>
-                <div @click="openTrack = (openTrack === 6 ? 0 : 6)" class="section-card rounded-lg p-6 cursor-pointer transform hover:scale-105 transition-transform"><div class="flex items-center gap-4"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-400 flex-shrink-0"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg><h4 class="text-xl font-bold text-white">TI de Base</h4></div><div x-show="openTrack === 6" x-transition x-cloak class="mt-4 text-sm text-gray-300"><p><strong>Carga horária:</strong> 120–200h</p><p><strong>Módulos:</strong> Suporte, Redes Industriais, Fundamentos de Automação/CLP.</p></div></div>
-            </div>
-        </section>
-
-
-        <!-- Section 7: Goiás Pilot -->
-        <section id="pilot" class="py-20">
-             <div class="text-center mb-12 md:mb-16">
-                <h3 class="text-3xl md:text-4xl font-bold tracking-tight text-white">Plano de Execução: Piloto Goiás e Escala Nacional</h3>
-                <p class="mt-4 text-base md:text-lg text-lime-300 font-medium max-w-3xl mx-auto">Executamos um plano de duas fases: um piloto robusto em Goiás para validar o modelo e uma expansão nacional para escalar o sucesso.</p>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-                <div class="section-card p-8 rounded-2xl">
-                    <h4 class="text-2xl font-bold text-white">Fase 1: Piloto GOIÁS (12 Meses)</h4>
-                    <ul class="mt-4 space-y-3 text-gray-300">
-                        <li class="flex items-start"><span class="text-green-400 mr-2 mt-1">&#9656;</span><strong>Meta:</strong> Capacitar <strong class="text-white">5.000 militares</strong>.</li>
-                        <li class="flex items-start"><span class="text-green-400 mr-2 mt-1">&#9656;</span><strong>Foco:</strong> Logística, Manutenção, Operação Industrial, Construção e Alimentos.</li>
-                        <li class="flex items-start"><span class="text-green-400 mr-2 mt-1">&#9656;</span><strong>Rede:</strong> 6 a 8 Organizações Militares prioritárias + rede SENAI-GO (escolas e 4 unidades móveis).</li>
-                         <li class="flex items-start"><span class="text-green-400 mr-2 mt-1">&#9656;</span><strong>Entrega de Valor:</strong> Empregabilidade em 90 dias pós-baixa, com cursos casados com vagas ativas na indústria goiana.</li>
-                    </ul>
-                </div>
-                 <div class="section-card p-8 rounded-2xl">
-                    <h4 class="text-2xl font-bold text-white">Fase 2: Expansão Nacional (24 Meses)</h4>
-                    <ul class="mt-4 space-y-3 text-gray-300">
-                        <li class="flex items-start"><span class="text-green-400 mr-2 mt-1">&#9656;</span><strong>Meta:</strong> Capacitar <strong class="text-white">20.000 militares</strong> em Goiás.</li>
-                        <li class="flex items-start"><span class="text-green-400 mr-2 mt-1">&#9656;</span><strong>Replicação:</strong> Iniciar operações em <strong class="text-white">10 estados estratégicos</strong> com metas proporcionais à demanda.</li>
-                         <li class="flex items-start"><span class="text-green-400 mr-2 mt-1">&#9656;</span><strong>Estados-alvo:</strong> SP, PR, MG, RJ, BA, CE, PA, AM, SC, PE.</li>
-                         <li class="flex items-start"><span class="text-green-400 mr-2 mt-1">&#9656;</span><strong>Resultado:</strong> Modelo nacional consolidado e auto-sustentável.</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
+      {/* Conteúdo Principal */}
+      <main className="animate-in fade-in duration-500 min-h-[500px]">
         
-        <!-- Section 8: Economic Impact -->
-        <section id="economic-impact" class="py-20">
-            <div class="text-center mb-12 md:mb-16">
-                 <h3 class="text-3xl md:text-4xl font-bold tracking-tight text-white">Projeção de Impacto Econômico</h3>
-                 <p class="mt-4 text-base md:text-lg text-lime-300 font-medium max-w-3xl mx-auto">Quantificamos o ROI do programa, projetando a injeção de centenas de milhões de reais em massa salarial na economia anualmente.</p>
+        {/* ABA: VISÃO GERAL */}
+        {activeTab === 'overview' && (
+          <>
+            <div className="mb-6">
+              <p className="text-slate-600 text-lg leading-relaxed">
+                Bem-vindo ao panorama geral da inovação no Brasil. Esta tela resume a liderança nacional e as principais assimetrias regionais.
+              </p>
             </div>
             
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start max-w-6xl mx-auto">
-                <div class="section-card p-8 rounded-2xl">
-                    <h4 class="text-2xl font-bold text-white mb-4">Cenário Piloto: Goiás</h4>
-                    <p class="text-gray-400 mb-6">Simulação baseada na meta de <strong>750 egressos/ano</strong>, distribuídos nas trilhas prioritárias para o estado.</p>
-                    <div class="space-y-4 text-sm">
-                        <div class="grid grid-cols-3 gap-4 font-semibold text-gray-400"><span class="col-span-1">Trilha</span><span>Egressos</span><span class="text-right">Massa Anual</span></div>
-                        <div class="grid grid-cols-3 gap-4 items-center"><span class="font-bold text-white col-span-1">Logística</span><span>263</span><span class="text-right text-green-400">R$ 7,36 mi</span></div>
-                        <div class="grid grid-cols-3 gap-4 items-center"><span class="font-bold text-white col-span-1">Construção</span><span>150</span><span class="text-right text-green-400">R$ 4,27 mi</span></div>
-                        <div class="grid grid-cols-3 gap-4 items-center"><span class="font-bold text-white col-span-1">Manutenção</span><span>150</span><span class="text-right text-green-400">R$ 6,29 mi</span></div>
-                        <div class="grid grid-cols-3 gap-4 items-center"><span class="font-bold text-white col-span-1">Metalmecânica</span><span>113</span><span class="text-right text-green-400">R$ 4,34 mi</span></div>
-                        <div class="grid grid-cols-3 gap-4 items-center"><span class="font-bold text-white col-span-1">Operação</span><span>75</span><span class="text-right text-green-400">R$ 1,98 mi</span></div>
-                    </div>
-                    <div class="mt-6 pt-4 border-t border-gray-700">
-                        <p class="text-gray-300 font-semibold">Massa Salarial Anual Estimada (Goiás)</p>
-                        <p class="text-4xl font-extrabold gradient-text">~ R$ 24,2 Milhões</p>
-                    </div>
+            <InteractionHint text="Estes cartões são apenas informativos (somente leitura)" className="mb-4 bg-slate-100 text-slate-500" />
+            
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
+              {/* Cartão de Destaque SP */}
+              <div className="md:col-span-8 bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl p-8 text-white shadow-xl relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500 rounded-full mix-blend-overlay filter blur-3xl opacity-20 -translate-y-1/2 translate-x-1/2"></div>
+                <div className="relative z-10">
+                  <div className="flex items-center gap-3 mb-4">
+                    <span className="bg-yellow-500 text-slate-900 text-xs font-bold px-2 py-1 rounded">LÍDER NACIONAL</span>
+                    <span className="text-slate-400 text-sm">IBID 2025</span>
+                  </div>
+                  <h2 className="text-4xl md:text-5xl font-bold mb-2">São Paulo</h2>
+                  <div className="flex items-end gap-2 mb-6">
+                    <span className="text-6xl font-light">0.872</span>
+                    <span className="text-green-400 mb-2 flex items-center gap-1 text-sm"><ArrowUpRight size={16}/> Estável</span>
+                  </div>
+                  <p className="text-slate-300 max-w-xl">
+                    Líder absoluto em todos os 7 pilares. Uma economia que serve como referência nacional, com pontuação 3x superior à média do Brasil.
+                  </p>
                 </div>
-                
-                <div class="space-y-8">
-                    <div class="section-card p-8 rounded-2xl">
-                        <h4 class="text-2xl font-bold text-white mb-2">Cenário Nacional (Multi-Força)</h4>
-                        <p class="text-gray-400 mb-4">Projeção para a meta de <strong>20.000 egressos/ano</strong>, utilizando o mesmo mix de distribuição conservador.</p>
-                        <p class="text-gray-300 font-semibold">Massa Salarial Anual Estimada (Brasil)</p>
-                        <p class="text-5xl font-extrabold gradient-text">~ R$ 645 Milhões</p>
-                        <p class="text-gray-400 mt-2">(Potencial de R$ 806 mi a R$ 967 mi/ano com 25-30 mil egressos)</p>
-                    </div>
-                    <div class="insight-box p-6 rounded-lg">
-                        <h4 class="font-bold text-lg text-white">Análise Estratégica do Impacto</h4>
-                        <p class="text-gray-300 mt-2">A massa salarial representa a injeção direta de riqueza na economia. Este valor, por sua vez, gera um <strong class="text-white">efeito multiplicador</strong>, aquecendo o comércio local, aumentando a arrecadação de impostos e reduzindo custos sociais. O S2I não é um custo, mas um investimento com retorno econômico e social direto e mensurável.</p>
-                    </div>
-                </div>
-            </div>
-             <p class="text-xs text-gray-500 mt-6 text-center">Fontes Salariais (out/2025): Portal Salario, Mentoring, Cargos e Salários, Quero Bolsa. Simulação conservadora com base em medianas e médias nacionais.</p>
-        </section>
+              </div>
 
-        <!-- Section 9: KPIs and Risks -->
-        <section id="kpis" class="py-20">
-            <div class="text-center mb-12 md:mb-16">
-                 <h3 class="text-3xl md:text-4xl font-bold tracking-tight text-white">Governança e Viabilidade</h3>
-                 <p class="mt-4 text-base md:text-lg text-lime-300 font-medium max-w-3xl mx-auto">Estabelecemos um 'contrato de impacto' com KPIs claros e um plano de mitigação para garantir a governança e a viabilidade do projeto.</p>
-            </div>
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
+              {/* Cartão Resumo Estatístico */}
+              <div className="md:col-span-4 bg-white rounded-2xl p-6 shadow-sm border border-slate-100 flex flex-col justify-between">
                 <div>
-                    <h4 class="text-2xl md:text-3xl font-bold tracking-tight text-white">Medindo o Sucesso: Contrato de Impacto</h4>
-                     <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div class="kpi-card p-4 rounded-lg"><p class="text-2xl font-bold text-white">>85%</p><p class="text-gray-300">de Conclusão</p></div>
-                        <div class="kpi-card p-4 rounded-lg"><p class="text-2xl font-bold text-white">>65%</p><p class="text-gray-300">de Emprego em 90 dias</p></div>
-                        <div class="kpi-card p-4 rounded-lg"><p class="text-2xl font-bold text-white">>70%</p><p class="text-gray-300">de Retenção em 12 meses</p></div>
-                         <div class="kpi-card p-4 rounded-lg"><p class="text-2xl font-bold text-white">>20%</p><p class="text-gray-300">Aumento Salarial vs. Mínimo</p></div>
+                  <h3 className="text-lg font-bold text-slate-700 mb-4">Destaques Rápidos</h3>
+                  <ul className="space-y-4">
+                    <li className="flex items-start gap-3">
+                      <div className="bg-green-100 p-2 rounded-lg text-green-600"><TrendingUp size={20}/></div>
+                      <div>
+                        <span className="block font-bold text-slate-800">Ascensão do Sul</span>
+                        <span className="text-sm text-slate-500">SC (2º) e PR (3º) consolidam-se como principais perseguidores.</span>
+                      </div>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <div className="bg-blue-100 p-2 rounded-lg text-blue-600"><AlertCircle size={20}/></div>
+                      <div>
+                        <span className="block font-bold text-slate-800">Desigualdade</span>
+                        <span className="text-sm text-slate-500">Sul/Sudeste ocupam 7 das 8 primeiras posições.</span>
+                      </div>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <div className="bg-orange-100 p-2 rounded-lg text-orange-600"><CheckCircle2 size={20}/></div>
+                      <div>
+                        <span className="block font-bold text-slate-800">Eficiência Nordeste</span>
+                        <span className="text-sm text-slate-500">Região entrega mais inovação do que o PIB per capita prevê.</span>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* Gráfico de Barras Simplificado */}
+              <div className="md:col-span-12 bg-white rounded-2xl p-8 shadow-sm">
+                <div className="flex justify-between items-center mb-6">
+                  <h3 className="text-xl font-bold">Top 10: Disparidade de Pontuação</h3>
+                  <span className="text-xs text-slate-400 border border-slate-200 px-2 py-1 rounded">Visualização Gráfica</span>
+                </div>
+                <div className="space-y-3">
+                  {rankingData.map((item) => (
+                    <div key={item.uf} className="flex items-center gap-4 group cursor-default p-2 rounded-lg hover:bg-slate-50 transition-colors">
+                      <span className="w-6 text-slate-400 font-mono font-bold text-sm">#{item.rank}</span>
+                      <span className="w-40 font-medium text-slate-700">{item.name}</span>
+                      <div className="flex-1 h-3 bg-slate-100 rounded-full overflow-hidden">
+                        <div 
+                          className="h-full bg-blue-600 rounded-full relative"
+                          style={{ width: `${(item.score / 0.872) * 100}%` }}
+                        ></div>
+                      </div>
+                      <span className="w-16 text-right font-mono text-sm text-slate-600">{item.score}</span>
                     </div>
+                  ))}
                 </div>
-                 <div>
-                    <h4 class="text-2xl md:text-3xl font-bold tracking-tight text-white">Análise de Riscos e Mitigação</h4>
-                     <ul class="mt-6 space-y-4">
-                        <li>
-                            <p class="font-semibold text-white">Risco: Conflito de agenda (quartel vs. curso).</p>
-                            <p class="text-gray-300 insight-box p-3 rounded-lg mt-1"><strong class="text-green-400">Mitigação:</strong> Turmas modulares, prática concentrada em janelas específicas e uso de EAD.</p>
-                        </li>
-                        <li>
-                            <p class="font-semibold text-white">Risco: Descasamento entre cursos e vagas reais.</p>
-                            <p class="text-gray-300 insight-box p-3 rounded-lg mt-1"><strong class="text-green-400">Mitigação:</strong> Comitê mensal de aderência com federações da indústria para ajustar trilhas trimestralmente.</p>
-                        </li>
-                         <li>
-                            <p class="font-semibold text-white">Risco: Dificuldade de financiamento.</p>
-                            <p class="text-gray-300 insight-box p-3 rounded-lg mt-1"><strong class="text-green-400">Mitigação:</strong> Mix de fontes: ampliar dotação do Soldado Cidadão, enquadrar no NIB e buscar contrapartida de empresas-âncora.</p>
-                        </li>
-                    </ul>
-                </div>
+              </div>
             </div>
-        </section>
+          </>
+        )}
 
-        <!-- Section 10: Vision -->
-        <section id="vision" class="py-20 text-center">
-             <div class="max-w-4xl mx-auto space-y-6">
-                 <h3 class="text-3xl md:text-4xl font-bold tracking-tight text-white">Uma Visão de Futuro: Por Que Faz Sentido Agora?</h3>
-                 <p class="mt-4 text-base md:text-lg text-lime-300 font-medium max-w-3xl mx-auto">Concluímos com a tese central: a convergência de demanda, talento e política pública torna este projeto uma necessidade estratégica imediata.</p>
-                 <div class="text-xl text-gray-300 mt-6 space-y-4 text-left pt-6">
-                     <p class="flex items-start"><span class="text-green-400 text-2xl mr-3">&bull;</span>A <strong class="text-white mx-1">demanda</strong> da indústria é comprovada e massiva (Mapa 2025–27).</p>
-                     <p class="flex items-start"><span class="text-green-400 text-2xl mr-3">&bull;</span>O <strong class="text-white mx-1">fluxo de talentos</strong> é constante e previsível (militares temporários).</p>
-                     <p class="flex items-start"><span class="text-green-400 text-2xl mr-3">&bull;</span>A <strong class="text-white mx-1">janela política e operacional</strong> está aberta (NIB e ACTs MD–SENAI).</p>
-                 </div>
-                <div class="pt-10">
-                    <a href="#" class="inline-block transition-transform hover:scale-105" title="Departamento de Ensino e Tecnologia do Ministério da Defesa">
-                        <img src="https://i.postimg.cc/hjkBrgdY/det-defesa.png" alt="Logotipo do Departamento de Ensino e Tecnologia do Ministério da Defesa" class="h-24">
-                    </a>
-                </div>
+        {/* ABA: RANKING DETALHADO */}
+        {activeTab === 'ranking' && (
+          <>
+            <div className="mb-6">
+              <p className="text-slate-600 text-lg leading-relaxed">
+                Esta tabela apresenta os dados brutos e o status de evolução. 
+              </p>
             </div>
-        </section>
-
-    </main>
-    
-    <script>
-        const stateData = {
-            'AC': { name: 'Acre', demand: 10390, unemployment: '8.2%', sectors: ['Construção', 'Serviços Gerais', 'Adm.'] },
-            'AL': { name: 'Alagoas', demand: 78781, unemployment: '9.9%', sectors: ['Agropecuária', 'Construção', 'Logística'] },
-            'AP': { name: 'Amapá', demand: 7594, unemployment: '10.8%', sectors: ['Construção', 'Serviços Gerais', 'Logística'] },
-            'AM': { name: 'Amazonas', demand: 102895, unemployment: '8.9%', sectors: ['Metalmecânica', 'Logística', 'Eletroeletrônica'] },
-            'BA': { name: 'Bahia', demand: 302363, unemployment: '12.4%', sectors: ['Construção', 'Couro/Calçados', 'Logística'] },
-            'CE': { name: 'Ceará', demand: 231622, unemployment: '8.3%', sectors: ['Couro/Calçados', 'Construção', 'Operação Ind.'] },
-            'DF': { name: 'Distrito Federal', demand: 70019, unemployment: '9.0%', sectors: ['Construção', 'Adm.', 'Serv. Gerais'] },
-            'ES': { name: 'Espírito Santo', demand: 135043, unemployment: '5.2%', sectors: ['Construção', 'Logística', 'Metalmecânica'] },
-            'GO': { name: 'Goiás', demand: 487000, unemployment: '5.1%', sectors: ['Logística (115k)', 'Construção (49k)', 'Operação (47k)'] },
-            'MA': { name: 'Maranhão', demand: 64049, unemployment: '7.8%', sectors: ['Construção', 'Logística', 'Metalmecânica'] },
-            'MT': { name: 'Mato Grosso', demand: 126767, unemployment: '3.4%', sectors: ['Construção', 'Operação Ind.', 'Alimentos'] },
-            'MS': { name: 'Mato Grosso do Sul', demand: 106405, unemployment: '4.2%', sectors: ['Operação Ind.', 'Logística', 'Construção'] },
-            'MG': { name: 'Minas Gerais', demand: 1600000, unemployment: '5.8%', sectors: ['Logística', 'Construção', 'Manutenção'] },
-            'PA': { name: 'Pará', demand: 143865, unemployment: '7.8%', sectors: ['Construção', 'Logística', 'Manutenção'] },
-            'PB': { name: 'Paraíba', demand: 90092, unemployment: '8.6%', sectors: ['Construção', 'Operação Ind.', 'Logística'] },
-            'PR': { name: 'Paraná', demand: 1100000, unemployment: '4.3%', sectors: ['Logística', 'Construção', 'Manutenção'] },
-            'PE': { name: 'Pernambuco', demand: 217881, unemployment: '11.6%', sectors: ['Construção', 'Operação Ind.', 'Agropecuária'] },
-            'PI': { name: 'Piauí', demand: 39787, unemployment: '8.9%', sectors: ['Construção', 'Adm.', 'Logística'] },
-            'RJ': { name: 'Rio de Janeiro', demand: 909700, unemployment: '10.0%', sectors: ['Logística/Portos', 'Construção', 'Manutenção'] },
-            'RN': { name: 'Rio Grande do Norte', demand: 73213, unemployment: '8.8%', sectors: ['Construção', 'Têxtil', 'Logística'] },
-            'RS': { name: 'Rio Grande do Sul', demand: 579719, unemployment: '5.2%', sectors: ['Metalmecânica', 'Operação Ind.', 'Logística'] },
-            'RO': { name: 'Rondônia', demand: 37496, unemployment: '3.3%', sectors: ['Alimentos', 'Operação Ind.', 'Construção'] },
-            'RR': { name: 'Roraima', demand: 6329, unemployment: '6.7%', sectors: ['Construção', 'Serv. Gerais', 'Adm.'] },
-            'SC': { name: 'Santa Catarina', demand: 590035, unemployment: '3.0%', sectors: ['Operação Ind.', 'Metalmecânica', 'Logística'] },
-            'SP': { name: 'São Paulo', demand: 4300000, unemployment: '7.4%', sectors: ['Logística', 'Metalmecânica', 'Operação'] },
-            'SE': { name: 'Sergipe', demand: 48650, unemployment: '10.6%', sectors: ['Construção', 'Logística', 'Operação Ind.'] },
-            'TO': { name: 'Tocantins', demand: 25168, unemployment: '5.7%', sectors: ['Construção', 'Logística', 'Adm.'] }
-        };
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const hotspots = document.querySelectorAll('.state-hotspot');
-            const infoTitle = document.getElementById('info-title');
-            const infoDemand = document.getElementById('info-demand');
-            const infoSectors = document.getElementById('info-sectors');
-            const infoUnemployment = document.getElementById('info-unemployment');
-            const infoDetails = document.getElementById('info-details');
-
-            function updateInfoPanel(stateId) {
-                const data = stateData[stateId];
-                if (!data) return;
-
-                infoTitle.textContent = data.name;
-                infoDemand.textContent = data.demand.toLocaleString('pt-BR');
-                infoSectors.innerHTML = data.sectors.map(sector => `<li class="flex items-start"><span class="text-green-400 mr-2 mt-1">&#9656;</span>${sector}</li>`).join('');
-                infoUnemployment.textContent = data.unemployment;
-                
-                infoDetails.classList.remove('hidden');
-                
-                hotspots.forEach(p => p.classList.remove('active'));
-                document.getElementById(stateId)?.classList.add('active');
-            }
-
-            hotspots.forEach(hotspot => {
-                hotspot.addEventListener('mouseover', () => updateInfoPanel(hotspot.id));
-                hotspot.addEventListener('click', () => updateInfoPanel(hotspot.id));
-            });
             
-            updateInfoPanel('GO');
-        });
-    </script>
+            <InteractionHint text="Role a tabela para baixo caso necessário" className="mb-4" />
 
-</body>
-</html>
+            <div className="bg-white rounded-2xl shadow-sm overflow-hidden border border-slate-100">
+              <div className="p-6 border-b border-slate-100 bg-slate-50 flex justify-between items-center">
+                <h3 className="text-xl font-bold text-slate-800">Tabela Geral IBID 2025</h3>
+                <span className="text-sm bg-blue-100 text-blue-800 px-3 py-1 rounded-full">Média Nacional: ~0.29</span>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-sm">
+                  <thead>
+                    <tr className="bg-slate-50 text-slate-500">
+                      <th className="p-4 font-semibold">Posição</th>
+                      <th className="p-4 font-semibold">Estado</th>
+                      <th className="p-4 font-semibold">Região</th>
+                      <th className="p-4 font-semibold text-right">IBID Score</th>
+                      <th className="p-4 font-semibold">Status (2015-2025)</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-100">
+                    {rankingData.map((item, index) => (
+                      <tr key={item.uf} className={`hover:bg-blue-50 transition-colors ${index < 5 ? 'bg-white' : 'bg-slate-50/50'}`}>
+                        <td className="p-4">
+                          <span className={`flex items-center justify-center w-8 h-8 rounded-full font-bold ${index === 0 ? 'bg-yellow-100 text-yellow-700' : index < 3 ? 'bg-slate-200 text-slate-700' : 'text-slate-500'}`}>
+                            {item.rank}
+                          </span>
+                        </td>
+                        <td className="p-4 font-medium text-slate-700 text-base">{item.name}</td>
+                        <td className="p-4 text-slate-500">{item.region}</td>
+                        <td className="p-4 text-right font-mono font-medium text-blue-600">{item.score}</td>
+                        <td className="p-4">
+                          <span className={`px-2 py-1 rounded text-xs font-semibold
+                            ${item.status === 'Líder' ? 'bg-yellow-100 text-yellow-700' : ''}
+                            ${item.status === 'Climber' ? 'bg-green-100 text-green-700' : ''}
+                            ${item.status === 'Estável' ? 'bg-slate-100 text-slate-600' : ''}
+                            ${item.status === 'Queda' ? 'bg-red-100 text-red-700' : ''}
+                          `}>
+                            {item.status}
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </>
+        )}
+
+        {/* ABA: PILARES */}
+        {activeTab === 'pillars' && (
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
+              <div className="md:col-span-12 mb-2">
+                <p className="text-slate-600 text-lg leading-relaxed">
+                  A inovação é multifacetada. Explore cada um dos 7 Pilares Temáticos para ver detalhes.
+                </p>
+              </div>
+
+              {/* Seletor de Pilares */}
+              <div className="md:col-span-4 space-y-2">
+                <InteractionHint text="Clique em um pilar para atualizar os detalhes à direita" />
+                
+                {pillars.map((pillar) => (
+                  <button
+                    key={pillar.id}
+                    onClick={() => setSelectedPillar(pillar.id)}
+                    className={`w-full text-left px-4 py-4 rounded-xl flex items-center gap-3 transition-all duration-200 relative group ${
+                      selectedPillar === pillar.id
+                        ? `${pillar.color} text-white shadow-lg scale-105 z-10 ring-2 ring-offset-2 ring-slate-200`
+                        : 'bg-white text-slate-600 hover:bg-slate-50 border border-slate-100 hover:border-slate-300'
+                    }`}
+                  >
+                    <div className={`p-2 rounded-lg ${selectedPillar === pillar.id ? 'bg-white/20' : 'bg-slate-100 text-slate-500'}`}>
+                      {pillar.icon}
+                    </div>
+                    <span className="font-medium">{pillar.title}</span>
+                    
+                    {/* Indicador de seleção visual */}
+                    {selectedPillar === pillar.id && (
+                      <div className="absolute right-4 animate-pulse">
+                         <div className="w-2 h-2 bg-white rounded-full"></div>
+                      </div>
+                    )}
+                  </button>
+                ))}
+              </div>
+
+              {/* Detalhe do Pilar */}
+              <div className="md:col-span-8">
+                <div className="bg-white rounded-2xl p-8 shadow-sm border border-slate-100 h-full transition-all duration-500">
+                  <div className={`inline-block px-3 py-1 rounded-full text-xs font-bold text-white mb-4 ${pillars[selectedPillar].color}`}>
+                    PILAR SELECIONADO: {pillars[selectedPillar].title.toUpperCase()}
+                  </div>
+                  <h2 className="text-3xl font-bold text-slate-800 mb-2 flex items-center gap-2">
+                    {pillars[selectedPillar].title}
+                  </h2>
+                  <p className="text-slate-500 text-lg mb-8">
+                    {pillars[selectedPillar].desc}
+                  </p>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div className="bg-slate-50 rounded-xl p-5 border border-slate-100">
+                      <h4 className="text-sm font-bold text-slate-400 uppercase mb-3 tracking-wider">Líderes do Ranking</h4>
+                      <div className="space-y-2">
+                        {pillars[selectedPillar].top.map((item, idx) => (
+                          <div key={idx} className="flex items-center gap-2">
+                            <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold text-white ${idx === 0 ? 'bg-yellow-400' : 'bg-slate-300'}`}>
+                              {idx + 1}
+                            </div>
+                            <span className="font-medium text-slate-700">{item}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="bg-blue-50 rounded-xl p-5 border border-blue-100">
+                      <h4 className="text-sm font-bold text-blue-400 uppercase mb-3 tracking-wider flex items-center gap-2">
+                        <Lightbulb size={16}/> Insight Exclusivo
+                      </h4>
+                      <p className="text-blue-900 text-sm leading-relaxed">
+                        {pillars[selectedPillar].insight}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="bg-slate-900 text-white p-4 rounded-lg text-sm flex items-start gap-3">
+                    <Info className="flex-shrink-0 mt-0.5" size={18} />
+                    <p>Conteúdo dinâmico atualizado conforme sua seleção no menu à esquerda.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </>
+        )}
+
+        {/* ABA: GOIÁS EM FOCO */}
+        {activeTab === 'goias' && (
+          <div className="space-y-6">
+             <div className="mb-2">
+              <p className="text-slate-600 text-lg leading-relaxed">
+                Análise estratégica profunda do estado de Goiás.
+              </p>
+            </div>
+            {/* Header Goiás */}
+            <div className="bg-gradient-to-r from-emerald-800 to-emerald-600 rounded-2xl p-8 text-white shadow-xl relative overflow-hidden">
+               <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-400 rounded-full mix-blend-overlay filter blur-3xl opacity-20 -translate-y-1/2 translate-x-1/2"></div>
+               <div className="relative z-10 flex flex-col md:flex-row justify-between items-end">
+                 <div>
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="bg-emerald-400/30 text-emerald-100 text-xs font-bold px-2 py-1 rounded border border-emerald-400/20">CENTRO-OESTE</span>
+                    </div>
+                    <h2 className="text-4xl font-bold mb-2">Goiás</h2>
+                    <p className="text-emerald-100 text-lg max-w-xl">
+                      Potência agrícola e exemplo de segurança jurídica no Brasil. O estado combina força econômica com o melhor ambiente regulatório do país.
+                    </p>
+                 </div>
+                 <div className="mt-6 md:mt-0 flex gap-4 text-center">
+                    <div className="bg-white/10 backdrop-blur-md px-4 py-2 rounded-lg border border-white/20">
+                      <span className="block text-2xl font-bold">9º</span>
+                      <span className="text-xs text-emerald-200">Geral</span>
+                    </div>
+                    <div className="bg-white/10 backdrop-blur-md px-4 py-2 rounded-lg border border-white/20">
+                      <span className="block text-2xl font-bold text-yellow-300">1º</span>
+                      <span className="text-xs text-emerald-200">Regulatório</span>
+                    </div>
+                    <div className="bg-white/10 backdrop-blur-md px-4 py-2 rounded-lg border border-white/20">
+                      <span className="block text-2xl font-bold">3º</span>
+                      <span className="text-xs text-emerald-200">Instituições</span>
+                    </div>
+                 </div>
+               </div>
+            </div>
+            
+            <InteractionHint text="Passe o mouse sobre os cartões abaixo para ver o destaque visual" className="mt-4" />
+
+            {/* Grid de Estratégia */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              
+              {/* Card 1: Força Econômica */}
+              <div className="bg-white p-6 rounded-2xl shadow-sm border-t-4 border-green-500 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 cursor-help group">
+                <div className="flex justify-between items-start mb-4">
+                   <div className="p-3 bg-green-50 text-green-600 rounded-xl group-hover:bg-green-100 transition-colors">
+                     <Sprout size={24} />
+                   </div>
+                   <span className="text-xs font-bold text-slate-400 uppercase tracking-wide">Pilar Econômico</span>
+                </div>
+                <h3 className="text-xl font-bold text-slate-800 mb-2">Agroindústria & Crédito</h3>
+                <p className="text-slate-600 text-sm mb-4 leading-relaxed">
+                  Goiás se destaca com altas posições em <strong>Crédito (6º)</strong> e <strong>Investimento (5º)</strong>.
+                </p>
+                <div className="flex items-center gap-2 text-sm text-green-700 font-medium group-hover:translate-x-1 transition-transform">
+                  <ArrowRight size={16} />
+                  <span>Motor do PIB estadual</span>
+                </div>
+              </div>
+
+              {/* Card 2: Diferencial Competitivo */}
+              <div className="bg-white p-6 rounded-2xl shadow-sm border-t-4 border-blue-500 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 cursor-help group">
+                <div className="flex justify-between items-start mb-4">
+                   <div className="p-3 bg-blue-50 text-blue-600 rounded-xl group-hover:bg-blue-100 transition-colors">
+                     <Scale size={24} />
+                   </div>
+                   <span className="text-xs font-bold text-slate-400 uppercase tracking-wide">Diferencial</span>
+                </div>
+                <h3 className="text-xl font-bold text-slate-800 mb-2">Ambiente Regulatório</h3>
+                <p className="text-slate-600 text-sm mb-4 leading-relaxed">
+                  Líder nacional (1º lugar) nesta dimensão. A estabilidade jurídica e a qualidade das regras de negócio tornam Goiás um "porto seguro".
+                </p>
+                <div className="flex items-center gap-2 text-sm text-blue-700 font-medium group-hover:translate-x-1 transition-transform">
+                  <ArrowRight size={16} />
+                  <span>Melhor do Brasil</span>
+                </div>
+              </div>
+
+              {/* Card 3: Desafio Estratégico */}
+              <div className="bg-white p-6 rounded-2xl shadow-sm border-t-4 border-orange-500 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 cursor-help group">
+                <div className="flex justify-between items-start mb-4">
+                   <div className="p-3 bg-orange-50 text-orange-600 rounded-xl group-hover:bg-orange-100 transition-colors">
+                     <Target size={24} />
+                   </div>
+                   <span className="text-xs font-bold text-slate-400 uppercase tracking-wide">Oportunidade</span>
+                </div>
+                <h3 className="text-xl font-bold text-slate-800 mb-2">Gap Tecnológico</h3>
+                <p className="text-slate-600 text-sm mb-4 leading-relaxed">
+                  Apesar da força econômica, Goiás ocupa apenas a <strong>19ª posição</strong> em Conhecimento e Tecnologia.
+                </p>
+                <div className="flex items-center gap-2 text-sm text-orange-700 font-medium group-hover:translate-x-1 transition-transform">
+                  <ArrowRight size={16} />
+                  <span>Foco: Agrotechs</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Análise SWOT Visual */}
+            <div className="bg-slate-900 rounded-2xl p-8 text-white">
+              <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
+                <Lightbulb className="text-yellow-400" />
+                Insight Estratégico para Inovação
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="space-y-4">
+                  <h4 className="font-bold text-slate-300 uppercase text-sm border-b border-slate-700 pb-2">O Cenário Atual</h4>
+                  <p className="text-slate-400 leading-relaxed">
+                    Goiás vive um paradoxo positivo: possui capital (Crédito/Investimento) e segurança (Regulatório), mas ainda não converteu esses insumos plenamente em <i>output</i> tecnológico (Startups/Patentes).
+                  </p>
+                </div>
+                <div className="space-y-4">
+                  <h4 className="font-bold text-slate-300 uppercase text-sm border-b border-slate-700 pb-2">A Tese de Inovação</h4>
+                  <p className="text-slate-400 leading-relaxed">
+                    A estratégia vencedora para Goiás não é copiar SP, mas criar um <strong>Hub de Agrotech</strong>. Utilizar a liderança regulatória para criar "Sandboxes Regulatórios" específicos para o Agro, atraindo startups que precisam testar tecnologias no campo com segurança jurídica.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ABA: INSIGHTS */}
+        {activeTab === 'insights' && (
+          <div className="space-y-8">
+            <div className="mb-2">
+              <p className="text-slate-600 text-lg leading-relaxed">
+                Interpretação qualitativa das tendências.
+              </p>
+            </div>
+            
+            <InteractionHint text="Análise qualitativa (somente leitura)" className="bg-slate-100 text-slate-500 mb-4" />
+            
+            {/* Seção Climbers */}
+            <div className="bg-gradient-to-r from-emerald-600 to-teal-500 rounded-2xl p-8 text-white shadow-lg">
+              <div className="flex items-center gap-3 mb-6">
+                <TrendingUp size={32} />
+                <h2 className="text-2xl font-bold">Os "Climbers" (2015-2025)</h2>
+              </div>
+              <p className="mb-8 text-emerald-100 max-w-2xl">
+                Estados que apresentaram crescimento acelerado na última década, subindo posições no ranking através de melhorias consistentes.
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                {climbers.map((c) => (
+                  <div key={c.uf} className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20 hover:bg-white/20 transition-all">
+                    <div className="flex justify-between items-center mb-2">
+                      <h3 className="font-bold text-xl">{c.name}</h3>
+                      <span className="bg-emerald-400/20 text-emerald-200 text-xs px-2 py-1 rounded">{c.uf}</span>
+                    </div>
+                    <div className="text-2xl font-bold text-emerald-300 mb-2">{c.growth}</div>
+                    <p className="text-xs text-emerald-100">{c.detail}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Seção Eficiência e Comparativo */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                <h3 className="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+                  <CheckCircle2 className="text-orange-500" />
+                  Eficiência do Nordeste
+                </h3>
+                <p className="text-slate-600 mb-4 leading-relaxed">
+                  Uma das maiores descobertas do IBID 2025 é que, com exceção de Alagoas, <strong>todos os estados do Nordeste</strong> performam acima do esperado para seu nível de renda (PIB per capita).
+                </p>
+                <div className="bg-orange-50 p-4 rounded-lg border border-orange-100 text-sm text-orange-800">
+                  <strong className="block mb-1">O que isso significa?</strong>
+                  Eles convertem recursos escassos (insumos) em resultados de inovação com mais eficiência que estados do Norte ou Centro-Oeste.
+                </div>
+              </div>
+
+              <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                <h3 className="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+                  <AlertCircle className="text-red-500" />
+                  Gargalos Estruturais
+                </h3>
+                <ul className="space-y-3">
+                  <li className="flex gap-3 text-sm text-slate-600">
+                    <span className="w-1.5 h-1.5 bg-red-400 rounded-full mt-2 flex-shrink-0"></span>
+                    <p><strong>Norte/Nordeste:</strong> Déficit crítico em Infraestrutura e Capital Humano (Educação Básica).</p>
+                  </li>
+                  <li className="flex gap-3 text-sm text-slate-600">
+                    <span className="w-1.5 h-1.5 bg-red-400 rounded-full mt-2 flex-shrink-0"></span>
+                    <p><strong>Rio de Janeiro:</strong> Queda gradual devido a fragilidades em "Instituições" e "Ambiente de Crédito".</p>
+                  </li>
+                  <li className="flex gap-3 text-sm text-slate-600">
+                    <span className="w-1.5 h-1.5 bg-red-400 rounded-full mt-2 flex-shrink-0"></span>
+                    <p><strong>Distrito Federal:</strong> Forte em Capital Humano, mas último lugar (27º) no Pilar Econômico (Crédito/Investimento).</p>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        )}
+
+      </main>
+
+      {/* Rodapé */}
+      <footer className="mt-12 border-t border-slate-200 pt-8 pb-4 text-center animate-in fade-in duration-700">
+        <p className="text-slate-700 font-semibold text-lg">
+          Elaborado por: Antonio Balduino Neto
+        </p>
+        <p className="text-slate-500 text-sm mt-1">
+          Especialista em Foresight Estratégico e Design de Futuros
+        </p>
+      </footer>
+    </div>
+  );
+};
+
+// Ícone de Maleta para Negócios (substituindo caso não tenha no import inicial)
+const BriefcaseIcon = ({ className }) => (
+  <svg 
+    xmlns="http://www.w3.org/2000/svg" 
+    viewBox="0 0 24 24" 
+    fill="none" 
+    stroke="currentColor" 
+    strokeWidth="2" 
+    strokeLinecap="round" 
+    strokeLinejoin="round" 
+    className={className}
+  >
+    <rect width="20" height="14" x="2" y="7" rx="2" ry="2" />
+    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+  </svg>
+);
+
+export default IBIDDashboard;
